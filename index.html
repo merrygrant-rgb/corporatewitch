@@ -287,32 +287,7 @@
     color: var(--magenta-bright);
   }
 
-  /* SCROLL HINT */
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-dim);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    animation: fadeInUp 1s ease 1s both;
-    z-index: 2;
-  }
-
-  .scroll-hint::after {
-    content: '';
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--magenta), transparent);
-    animation: scroll-line 2s ease-in-out infinite;
-  }
-
+ 
   @keyframes scroll-line {
     0%, 100% { transform: scaleY(0); transform-origin: top; }
     50% { transform: scaleY(1); transform-origin: top; }
@@ -906,7 +881,6 @@
     <a href="#about" class="cta-ghost">Who Am I?</a>
   </div>
 
-  <div class="scroll-hint">Scroll</div>
 </section>
 
 <!-- QUOTE -->
@@ -921,13 +895,15 @@
 <section class="about" id="about">
   <div class="container">
     <div class="about-grid">
-      <div class="about-text reveal">
+            <div class="about-text reveal">
         <p class="section-label">Who Is The Witch</p>
-        <h2 class="section-title">I've Held More Roles Than Most People Will in a Lifetime</h2>
-        <p>I'm <strong>Merry</strong>. Anesthesia Tech. Endoscopy Tech. Surgical Coordinator. Fortune 500 Finance. <strong>C-Suite Executive Escalation Squad</strong>. Ecommerce Launch Specialist. Now a Senior Design Engineer.</p>
-        <p>Not because I couldn't sit still. Because I have an <span class="highlight">insatiable desire to level up</span> — and every room I walked into, eventually I outgrew it.</p>
-        <p>Then I started using AI in my current role. <span class="highlight">It didn't just save me time — my numbers got measurably better.</span> That's when I knew this wasn't another tool in the toolbox. It was the toolbox itself, rewired.</p>
-        <p>I had to go deeper. And now I'm going to show you what I found.</p>
+        <h2 class="section-title">Some people see magic. I see the system behind the spell.</h2>
+        <p>I don't collect titles. I solve the same problem in bigger rooms.</p>
+        <p>I'm <strong>Merry</strong>. I've been the tech in the OR making sure anesthesia flows, the surgical coordinator juggling a dozen moving pieces, the finance analyst catching the error nobody else saw, the escalation specialist calming down a C-suite meltdown, and the engineer launching ecommerce platforms that actually convert.</p>
+        <p>The common thread? Every role had a system bleeding time. And I couldn't stop myself from fixing it.</p>
+        <p>Then I met AI. Not as a shortcut—as a force multiplier. <span class="highlight">My metrics didn't just improve; they transformed.</span> That's when I realized I wasn't looking at another app to learn. I was looking at a new operating system for work itself.</p>
+        <p>Now I show up on TikTok, pull back the curtain, and help professionals stop wrestling with their workflow and start commanding it. No corporate fluff. No gatekeeping. Just the real mechanics of working smarter.</p>
+        <p>The spell isn't in the software. It's in how you stack it. ChatGPT for the pitch. Claude for the data. Kimi for the build. Gemini for the vision. Mesh them right, and you don't just save time—you build a perfect weapon for business. No degree required. Just strategy. <span class="highlight">Let's build yours.</span></p>
       </div>
       <div class="career-path reveal">
         <div class="career-item"><span class="arrow">▶</span> Anesthesia &amp; Endoscopy Tech</div>
