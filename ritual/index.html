@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Readiness Ritual — Corporate Witch</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --magenta: #c0186c;
+    --magenta-bright: #e91e8c;
+    --magenta-glow: #ff2d9b;
+    --dark: #080608;
+    --dark-2: #0f0a0e;
+    --dark-3: #1a0f18;
+    --text: #f0e6ee;
+    --text-dim: #9a7a94;
+    --stage-0: #ff4444;
+    --stage-1: #ff8c00;
+    --stage-2: #ffd700;
+    --stage-3: #44dd88;
+    --stage-4: #e91e8c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--dark);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+  .ritual-header {
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(192,24,108,0.15);
+    background: var(--dark-2);
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--magenta-bright); }
+  .header-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  .header-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .header-title span { color: var(--magenta-bright); text-shadow: 0 0 30px rgba(233,30,140,0.4); }
+  .header-sub {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+  .ritual-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+  .progress-track {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+  }
+  .progress-step {
+    flex: 1;
+    height: 2px;
+    background: rgba(192,24,108,0.15);
+    position: relative;
+    transition: background 0.5s ease;
+  }
+  .progress-step.done { background: var(--magenta); }
+  .progress-step.active { background: linear-gradient(90deg, var(--magenta), var(--magenta-glow)); }
+  .progress-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.8rem;
+    text-align: right;
+  }
+  .question-panel {
+    display: none;
+    animation: fadeInUp 0.5s ease both;
+  }
+  .question-panel.active { display: block; }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .q-number {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .q-text {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 0.8rem;
+  }
+  .q-subtext {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .answer-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+  .answer-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--dark-3);
+    border: 1px solid rgba(192,24,108,0.15);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .answer-option::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  .answer-option:hover {
+    border-color: rgba(192,24,108,0.5);
+    background: rgba(192,24,108,0.06);
+    transform: translateX(4px);
+  }
+  .answer-option:hover::before { transform: scaleX(1); }
+  .answer-option.selected {
+    border-color: var(--magenta-bright);
+    background: rgba(192,24,108,0.12);
+    transform: translateX(4px);
+  }
+  .answer-option.selected::before { transform: scaleX(1); }
+  .option-marker {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border: 1px solid rgba(192,24,108,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    transition: all 0.25s ease;
+    margin-top: 1px;
+  }
+  .answer-option.selected .option-marker {
+    background: var(--magenta);
+    border-color: var(--magenta-bright);
+    color: white;
+  }
+  .option-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+  }
+  .option-detail {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .nav-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+  .btn-next {
+    padding: 0.9rem 2.5rem;
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-bright));
+    color: white;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.4;
+    pointer-events: none;
+    box-shadow: 0 0 20px rgba(192,24,108,0.2);
+  }
+  .btn-next.ready {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .btn-next.ready:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(233,30,140,0.4);
+  }
+  .context-section { margin-top: 2rem; }
+  .context-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .context-input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(192,24,108,0.25);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    outline: none;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.3s ease;
+  }
+  .context-input::placeholder { color: var(--text-dim); opacity: 0.6; }
+  .context-input:focus {
+    border-color: var(--magenta);
+    background: rgba(192,24,108,0.04);
+  }
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 600px) {
+    .profile-grid { grid-template-columns: 1fr; }
+  }
+  .profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .profile-field label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    font-weight: 600;
+  }
+  .profile-field select,
+  .profile-field input {
+    padding: 0.9rem 1.2rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(192,24,108,0.25);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  .profile-field select:focus,
+  .profile-field input:focus {
+    border-color: var(--magenta);
+    background: rgba(192,24,108,0.04);
+  }
+  .profile-field select option {
+    background: var(--dark-3);
+    color: var(--text);
+  }
+  .scanning-panel {
+    display: none;
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+  .scanning-panel.active { display: block; }
+  .scan-sigil {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    animation: ritual-spin 3s linear infinite;
+    display: inline-block;
+    filter: drop-shadow(0 0 20px var(--magenta));
+  }
+  @keyframes ritual-spin {
+    0% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 10px var(--magenta)); }
+    50% { transform: rotate(180deg) scale(1.1); filter: drop-shadow(0 0 30px var(--magenta-glow)); }
+    100% { transform: rotate(360deg) scale(1); filter: drop-shadow(0 0 10px var(--magenta)); }
+  }
+  .scan-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .scan-status {
+    font-size: 0.8rem;
+    color: var(--magenta-bright);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    min-height: 1.5em;
+    transition: opacity 0.3s;
+  }
+  .scan-bar-wrap {
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem auto;
+    height: 2px;
+    background: rgba(192,24,108,0.15);
+    overflow: hidden;
+  }
+  .scan-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--magenta), var(--magenta-glow));
+    transition: width 0.4s ease;
+    box-shadow: 0 0 10px var(--magenta-bright);
+  }
+  .results-panel {
+    display: none;
+    animation: fadeInUp 0.6s ease both;
+  }
+  .results-panel.active { display: block; }
+  .stage-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border: 1px solid;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .stage-icon { font-size: 2rem; }
+  .stage-label-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .stage-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+  }
+  .score-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .score-cell {
+    padding: 1.2rem;
+    background: var(--dark-3);
+    border: 1px solid rgba(192,24,108,0.15);
+    text-align: center;
+  }
+  .score-val {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--magenta-bright);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .score-lbl {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .quickwin-block {
+    background: linear-gradient(135deg, rgba(192,24,108,0.08), rgba(233,30,140,0.04));
+    border: 1px solid rgba(192,24,108,0.25);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .quickwin-block::before {
+    content: '⚡';
+    position: absolute;
+    top: -15px;
+    left: 2rem;
+    background: var(--dark);
+    padding: 0 1rem;
+    font-size: 1.5rem;
+  }
+  .quickwin-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  .quickwin-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+  .quickwin-sub {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .analysis-block {
+    background: var(--dark-3);
+    border: 1px solid rgba(192,24,108,0.2);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .analysis-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+  }
+  .analysis-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+  }
+  .analysis-text {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text-dim);
+    font-weight: 300;
+  }
+  .analysis-text strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .findings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 600px) {
+    .findings-grid { grid-template-columns: 1fr; }
+    .score-row { grid-template-columns: 1fr 1fr; }
+  }
+  .finding-card {
+    padding: 1.2rem 1.5rem;
+    border: 1px solid;
+    position: relative;
+  }
+  .finding-card.gap { border-color: rgba(255,68,68,0.3); background: rgba(255,68,68,0.04); }
+  .finding-card.strength { border-color: rgba(68,221,136,0.3); background: rgba(68,221,136,0.04); }
+  .finding-card.priority { border-color: rgba(233,30,140,0.3); background: rgba(233,30,140,0.04); }
+  .finding-type {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  .finding-card.gap .finding-type { color: #ff6666; }
+  .finding-card.strength .finding-type { color: #44dd88; }
+  .finding-card.priority .finding-type { color: var(--magenta-bright); }
+  .finding-text {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .verdict-block {
+    background: rgba(192,24,108,0.06);
+    border: 1px solid rgba(192,24,108,0.3);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .verdict-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(192,24,108,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .verdict-sigil {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(0 0 15px var(--magenta));
+  }
+  .verdict-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .verdict-text {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+  .verdict-copy {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-cta-primary {
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-bright));
+    color: white;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 0 30px rgba(192,24,108,0.3);
+  }
+  .btn-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(233,30,140,0.5);
+  }
+  .btn-cta-secondary {
+    padding: 1rem 2.5rem;
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid rgba(192,24,108,0.3);
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-cta-secondary:hover {
+    color: var(--magenta-bright);
+    border-color: var(--magenta);
+  }
+  .error-note {
+    display: none;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(255,68,68,0.3);
+    background: rgba(255,68,68,0.06);
+    color: #ff8888;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  .magic-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .magic-divider::before,
+  .magic-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(192,24,108,0.3), transparent);
+  }
+  .magic-divider span { color: var(--magenta); font-size: 1rem; }
+  footer {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(192,24,108,0.1);
+    color: var(--text-dim);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+  }
+  footer span { color: var(--magenta); }
+  .email-capture {
+    background: var(--dark-3);
+    border: 1px solid rgba(192,24,108,0.25);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .email-capture-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+  .email-capture-sub {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+  .email-form-inline {
+    display: flex;
+    gap: 0;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  @media (max-width: 500px) {
+    .email-form-inline { flex-direction: column; gap: 0.8rem; }
+  }
+  .email-input-inline {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(192,24,108,0.3);
+    border-right: none;
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+  }
+  @media (max-width: 500px) {
+    .email-input-inline { border-right: 1px solid rgba(192,24,108,0.3); }
+  }
+  .email-input-inline::placeholder { color: var(--text-dim); }
+  .email-submit-inline {
+    padding: 1rem 1.8rem;
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-bright));
+    color: white;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .email-submit-inline:hover {
+    box-shadow: 0 0 30px rgba(233,30,140,0.4);
+  }
+  .email-success {
+    display: none;
+    color: var(--magenta-bright);
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    padding: 1rem;
+  }
+  .share-block {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(192,24,108,0.15);
+  }
+  .share-text {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: rgba(192,24,108,0.1);
+    border: 1px solid rgba(192,24,108,0.3);
+    color: var(--text);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .share-btn:hover {
+    background: rgba(192,24,108,0.2);
+    border-color: var(--magenta-bright);
+  }
+  /* ===== ENHANCED QUICK WIN PLAN (lead magnet) ===== */
+  .quickwin-plan-steps {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+  }
+
+  .quickwin-plan-steps li {
+    padding: 1rem 0;
+    border-bottom: 1px dashed rgba(192,24,108,0.15);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  .quickwin-plan-steps li:last-child { border-bottom: none; }
+
+  .qw-step-num {
+    width: 30px;
+    height: 30px;
+    background: var(--magenta);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-shadow: 0 0 15px rgba(192,24,108,0.4);
+  }
+
+  .qw-step-locked {
+    background: rgba(192,24,108,0.15);
+    color: var(--text-faint);
+    box-shadow: none;
+  }
+
+  .qw-step-content { flex: 1; line-height: 1.6; }
+  .qw-step-content.locked {
+    filter: blur(5px);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .qw-step-content strong { color: var(--magenta-bright); }
+  .qw-step-content .qw-time {
+    font-size: 0.7rem;
+    color: var(--magenta);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+  .qw-step-content .qw-detail {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    margin-top: 0.2rem;
+  }
+
+  .quickwin-unlock {
+    background: var(--dark);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    border: 1px solid rgba(192,24,108,0.3);
+    box-shadow: 0 0 30px rgba(192,24,108,0.1);
+  }
+
+  .unlock-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+
+  .unlock-text {
+    color: var(--text);
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .unlock-text strong { color: var(--magenta-bright); }
+
+  .blocker-note {
+    background: rgba(192,24,108,0.08);
+    border-left: 2px solid var(--magenta-bright);
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .blocker-note strong { color: var(--magenta-bright); }
+
+
+</style>
+</head>
+<body>
+
+<header class="ritual-header">
+  <div>
+    <a class='back-link' href='/'>← Corporate Witch</a>
+  </div>
+  <p class="header-eyebrow">Free 90-Second Business Diagnostic</p>
+  <h1 class="header-title">The AI <span>Readiness</span> Ritual</h1>
+  <p class="header-sub">8 questions. Brutal honesty. Your personalized AI roadmap + consultation offer.</p>
+</header>
+
+<main class="ritual-body">
+
+  <div class="progress-label" id="progressLabel">Question 1 of 8</div>
+  <div class="progress-track" id="progressTrack">
+    <div class="progress-step active" id="ps0"></div>
+    <div class="progress-step" id="ps1"></div>
+    <div class="progress-step" id="ps2"></div>
+    <div class="progress-step" id="ps3"></div>
+    <div class="progress-step" id="ps4"></div>
+    <div class="progress-step" id="ps5"></div>
+    <div class="progress-step" id="ps6"></div>
+    <div class="progress-step" id="ps7"></div>
+  </div>
+
+  <!-- Q1: THE DAILY GRIND -->
+  <div class="question-panel active" id="q0">
+    <p class="q-number">Question 01 — The Daily Grind</p>
+    <h2 class="q-text">Which of these eats up your time every single week?</h2>
+    <p class="q-subtext">Pick the one that makes you say "there has to be a better way" at least twice a day.</p>
+    <div class="answer-grid">
+      <div class="answer-option" onclick="selectAnswer(0,0,0,'Writing emails, reports, documentation')" id="q0_0">
+        <div class="option-marker">A</div>
+        <div class="option-content">
+          <div class="option-label">Writing: emails, reports, documentation</div>
+          <div class="option-detail">You spend hours staring at blank pages, rewriting the same things.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(0,1,1,'Meetings and administrative coordination')" id="q0_1">
+        <div class="option-marker">B</div>
+        <div class="option-content">
+          <div class="option-label">Meetings that should've been emails</div>
+          <div class="option-detail">Scheduling, note-taking, follow-ups. Administrative quicksand.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(0,2,2,'Data analysis and spreadsheet work')" id="q0_2">
+        <div class="option-marker">C</div>
+        <div class="option-content">
+          <div class="option-label">Data analysis and spreadsheet work</div>
+          <div class="option-detail">Manual manipulation, pivot tables, reports that take all afternoon.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(0,3,3,'Research and staying current')" id="q0_3">
+        <div class="option-marker">D</div>
+        <div class="option-content">
+          <div class="option-label">Research and staying current</div>
+          <div class="option-detail">Hours reading articles, watching videos, trying to keep up with your industry.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(0,4,4,'Creative: presentations, visuals, content')" id="q0_4">
+        <div class="option-marker">E</div>
+        <div class="option-content">
+          <div class="option-label">Creative work: presentations, visuals, content</div>
+          <div class="option-detail">Design, slide decks, social content — you know it could look better.</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn-next" id="next0" onclick="nextQuestion(0)"><span>Continue →</span></button></div>
+  </div>
+
+  <!-- Q2: LEADERSHIP -->
+  <div class="question-panel" id="q1">
+    <p class="q-number">Question 02 — Leadership</p>
+    <h2 class="q-text">How does your company's leadership actually talk about AI?</h2>
+    <p class="q-subtext">Not what they should say — what comes out of their mouths in real meetings.</p>
+    <div class="answer-grid">
+      <div class="answer-option" onclick="selectAnswer(1,0,0,'Complete silence')" id="q1_0">
+        <div class="option-marker">A</div>
+        <div class="option-content">
+          <div class="option-label">The word "AI" has never been said</div>
+          <div class="option-detail">Complete silence. If mentioned, it was a joke or dismissed.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(1,1,1,'Buzzwords only')" id="q1_1">
+        <div class="option-marker">B</div>
+        <div class="option-content">
+          <div class="option-label">Buzzword status — lots of talk, zero action</div>
+          <div class="option-detail">"We need to look into AI" every quarter. That's the entire strategy.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(1,2,2,'Working group formed')" id="q1_2">
+        <div class="option-marker">C</div>
+        <div class="option-content">
+          <div class="option-label">There's a working group or committee</div>
+          <div class="option-detail">Someone got assigned to "explore AI." Meetings are happening. No output yet.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(1,3,3,'Active initiative with budget')" id="q1_3">
+        <div class="option-marker">D</div>
+        <div class="option-content">
+          <div class="option-label">Active initiative with budget and timeline</div>
+          <div class="option-detail">AI is on the roadmap. Resources allocated. Someone actually owns it.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(1,4,4,'Embedded in strategy')" id="q1_4">
+        <div class="option-marker">E</div>
+        <div class="option-content">
+          <div class="option-label">AI is embedded in company strategy</div>
+          <div class="option-detail">It's in the annual report. Decisions are AI-informed. Culture has shifted.</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn-next" id="next1" onclick="nextQuestion(1)"><span>Continue →</span></button></div>
+  </div>
+
+  <!-- Q3: TOOL ADOPTION -->
+  <div class="question-panel" id="q2">
+    <p class="q-number">Question 03 — Tool Adoption</p>
+    <h2 class="q-text">What AI tools are people in your company actually using?</h2>
+    <p class="q-subtext">Count real usage — not the IT-approved list gathering dust in procurement.</p>
+    <div class="answer-grid">
+      <div class="answer-option" onclick="selectAnswer(2,0,0,'None visible')" id="q2_0">
+        <div class="option-marker">A</div>
+        <div class="option-content">
+          <div class="option-label">None that I know of</div>
+          <div class="option-detail">If people are using AI tools, they're hiding it well.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(2,1,1,'Personal accounts only')" id="q2_1">
+        <div class="option-marker">B</div>
+        <div class="option-content">
+          <div class="option-label">A few individuals using personal accounts</div>
+          <div class="option-detail">ChatGPT, Claude, Gemini — personal subscriptions, not company-sanctioned.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(2,2,2,'Team deployment')" id="q2_2">
+        <div class="option-marker">C</div>
+        <div class="option-content">
+          <div class="option-label">One or two tools deployed to a team</div>
+          <div class="option-detail">Copilot in Office 365. An AI feature in the CRM. Narrow but real adoption.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(2,3,3,'Multiple departments')" id="q2_3">
+        <div class="option-marker">D</div>
+        <div class="option-content">
+          <div class="option-label">Multiple tools across several departments</div>
+          <div class="option-detail">Different teams using different tools. Not unified, but spreading organically.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(2,4,4,'Standard in workflows')" id="q2_4">
+        <div class="option-marker">E</div>
+        <div class="option-content">
+          <div class="option-label">AI tools are standard in most workflows</div>
+          <div class="option-detail">Not using AI tools is the exception, not the rule.</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn-next" id="next2" onclick="nextQuestion(2)"><span>Continue →</span></button></div>
+  </div>
+
+  <!-- Q4: THE BLOCKER -->
+  <div class="question-panel" id="q3">
+    <p class="q-number">Question 04 — The Blocker</p>
+    <h2 class="q-text">What's the single biggest thing stopping you from using AI more?</h2>
+    <p class="q-subtext">Be honest. This is where your consultation starts.</p>
+    <div class="answer-grid">
+      <div class="answer-option" onclick="selectAnswer(3,0,0,'Trust/Tool confusion')" id="q3_0">
+        <div class="option-marker">A</div>
+        <div class="option-content">
+          <div class="option-label">I don't know which tools to trust</div>
+          <div class="option-detail">Too many options. Hype everywhere. I don't know what's real vs. marketing.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(3,1,1,'IT/Company blocks')" id="q3_1">
+        <div class="option-marker">B</div>
+        <div class="option-content">
+          <div class="option-label">My company blocks everything / IT says no</div>
+          <div class="option-detail">Firewalls, policies, fear. I can't even access the tools I want to try.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(3,2,2,'Bad first experience')" id="q3_2">
+        <div class="option-marker">C</div>
+        <div class="option-content">
+          <div class="option-label">I tried once, got garbage results, gave up</div>
+          <div class="option-detail">Prompted ChatGPT. Got nonsense. Assumed it doesn't work for my actual job.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(3,3,3,'No time to learn')" id="q3_3">
+        <div class="option-marker">D</div>
+        <div class="option-content">
+          <div class="option-label">I don't have time to figure this out</div>
+          <div class="option-detail">I'm already underwater. Learning AI feels like another job on top of my job.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(3,4,4,'Fear of mistakes')" id="q3_4">
+        <div class="option-marker">E</div>
+        <div class="option-content">
+          <div class="option-label">I'm scared of making a mistake that gets me fired</div>
+          <div class="option-detail">What if I use AI wrong? What if data leaks? The risk feels bigger than the reward.</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn-next" id="next3" onclick="nextQuestion(3)"><span>Continue →</span></button></div>
+  </div>
+
+  <!-- Q5: TRAINING -->
+  <div class="question-panel" id="q4">
+    <p class="q-number">Question 05 — Training & Fluency</p>
+    <h2 class="q-text">Has your company invested in AI training for employees?</h2>
+    <p class="q-subtext">Real training — not a 4-minute video in the LMS nobody watched.</p>
+    <div class="answer-grid">
+      <div class="answer-option" onclick="selectAnswer(4,0,0,'No training')" id="q4_0">
+        <div class="option-marker">A</div>
+        <div class="option-content">
+          <div class="option-label">No training of any kind</div>
+          <div class="option-detail">People are on their own. Sink or swim. Figure it out or don't.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(4,1,1,'Compliance checkbox')" id="q4_1">
+        <div class="option-marker">B</div>
+        <div class="option-content">
+          <div class="option-label">A basic compliance or awareness module</div>
+          <div class="option-detail">There's a checkbox. People clicked through it. Nobody learned anything useful.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(4,2,2,'Optional resources')" id="q4_2">
+        <div class="option-marker">C</div>
+        <div class="option-content">
+          <div class="option-label">Optional resources — lunch-and-learns, articles</div>
+          <div class="option-detail">Content exists. Engagement is whoever already cared to begin with.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(4,3,3,'Structured program')" id="q4_3">
+        <div class="option-marker">D</div>
+        <div class="option-content">
+          <div class="option-label">Structured program for specific roles</div>
+          <div class="option-detail">Some people are getting real, role-relevant AI training with accountability.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(4,4,4,'Company-wide goal')" id="q4_4">
+        <div class="option-marker">E</div>
+        <div class="option-content">
+          <div class="option-label">Company-wide AI fluency is a stated goal with budget</div>
+          <div class="option-detail">Training is continuous, tracked, tied to performance expectations.</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn-next" id="next4" onclick="nextQuestion(4)"><span>Continue →</span></button></div>
+  </div>
+
+  <!-- Q6: PROCESS -->
+  <div class="question-panel" id="q5">
+    <p class="q-number">Question 06 — Process & Workflow</p>
+    <h2 class="q-text">Are core business processes automated or augmented with AI?</h2>
+    <p class="q-subtext">Drafting, scheduling, reporting, customer comms, research, data analysis.</p>
+    <div class="answer-grid">
+      <div class="answer-option" onclick="selectAnswer(5,0,0,'Fully manual')" id="q5_0">
+        <div class="option-marker">A</div>
+        <div class="option-content">
+          <div class="option-label">No — everything is still fully manual</div>
+          <div class="option-detail">Same processes as 5 years ago. AI hasn't touched anything operational.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(5,1,1,'Individual experiments')" id="q5_1">
+        <div class="option-marker">B</div>
+        <div class="option-content">
+          <div class="option-label">Individuals experimenting, nothing official</div>
+          <div class="option-detail">Someone's using AI to write emails. Their manager doesn't know. Unsanctioned.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(5,2,2,'One process improved')" id="q5_2">
+        <div class="option-marker">C</div>
+        <div class="option-content">
+          <div class="option-label">One or two processes officially improved with AI</div>
+          <div class="option-detail">A specific workflow is measurably faster. Limited scope, but real ROI.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(5,3,3,'Multiple departments')" id="q5_3">
+        <div class="option-marker">D</div>
+        <div class="option-content">
+          <div class="option-label">Multiple departments have AI-enhanced workflows</div>
+          <div class="option-detail">Real, documented time savings. ROI conversations are actually happening.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(5,4,4,'Systematically embedded')" id="q5_4">
+        <div class="option-marker">E</div>
+        <div class="option-content">
+          <div class="option-label">AI is systematically embedded across operations</div>
+          <div class="option-detail">Process improvement through AI is the operating standard, not the exception.</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn-next" id="next5" onclick="nextQuestion(5)"><span>Continue →</span></button></div>
+  </div>
+
+  <!-- Q7: CULTURE -->
+  <div class="question-panel" id="q6">
+    <p class="q-number">Question 07 — Culture & Fear</p>
+    <h2 class="q-text">What's the dominant emotional climate around AI at work?</h2>
+    <p class="q-subtext">Culture tells you more than any strategy document. What do people actually feel?</p>
+    <div class="answer-grid">
+      <div class="answer-option" onclick="selectAnswer(6,0,0,'Fear and resistance')" id="q6_0">
+        <div class="option-marker">A</div>
+        <div class="option-content">
+          <div class="option-label">Fear and resistance</div>
+          <div class="option-detail">"AI is going to take my job." People are defensive, dismissive, or avoidant.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(6,1,1,'Confusion and indifference')" id="q6_1">
+        <div class="option-marker">B</div>
+        <div class="option-content">
+          <div class="option-label">Confusion and indifference</div>
+          <div class="option-detail">"I don't really know what AI does for me." Nobody's scared — they're just checked out.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(6,2,2,'Curious but cautious')" id="q6_2">
+        <div class="option-marker">C</div>
+        <div class="option-content">
+          <div class="option-label">Curious but cautious</div>
+          <div class="option-detail">People are interested, but waiting for permission or proof before jumping in.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(6,3,3,'Enthusiasm in pockets')" id="q6_3">
+        <div class="option-marker">D</div>
+        <div class="option-content">
+          <div class="option-label">Enthusiasm in pockets</div>
+          <div class="option-detail">There are champions pushing for adoption. But it's not widespread yet.</div>
+        </div>
+      </div>
+      <div class="answer-option" onclick="selectAnswer(6,4,4,'Confident and proactive')" id="q6_4">
+        <div class="option-marker">E</div>
+        <div class="option-content">
+          <div class="option-label">Confident and proactive</div>
+          <div class="option-detail">People see AI as career leverage, not a threat. Adoption is self-sustaining.</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row"><button class="btn-next" id="next6" onclick="nextQuestion(6)"><span>Continue →</span></button></div>
+  </div>
+
+  <!-- Q8: PROFILE + PRIORITY -->
+  <div class="question-panel" id="q7">
+    <p class="q-number">Question 08 — Your Situation</p>
+    <h2 class="q-text">Tell me who you are and what you're actually worried about.</h2>
+    <p class="q-subtext">This determines your consultation tier and personalized roadmap.</p>
+
+    <div class="profile-grid">
+      <div class="profile-field">
+        <label for="roleSelect">Your Role</label>
+        <select id="roleSelect" onchange="checkProfileComplete()">
+          <option value="">Select your role...</option>
+          <option value="Individual Contributor">Individual Contributor</option>
+          <option value="Manager">Manager</option>
+          <option value="Director">Director</option>
+          <option value="VP or Above">VP or Above</option>
+          <option value="Business Owner">Business Owner</option>
+          <option value="Consultant">Consultant / Freelance</option>
+        </select>
+      </div>
+      <div class="profile-field">
+        <label for="industrySelect">Your Industry</label>
+        <select id="industrySelect" onchange="checkProfileComplete()">
+          <option value="">Select industry...</option>
+          <option value="Technology">Technology / SaaS</option>
+          <option value="Healthcare">Healthcare / Medical</option>
+          <option value="Finance">Finance / Banking / Insurance</option>
+          <option value="Manufacturing">Manufacturing / Logistics</option>
+          <option value="Marketing">Marketing / Agency / Creative</option>
+          <option value="Education">Education / Nonprofit</option>
+          <option value="Retail">Retail / E-commerce</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="profile-field" style="margin-bottom: 1.5rem;">
+      <label>What's your biggest concern right now?</label>
+      <div class="answer-grid" style="margin-top: 0.5rem;">
+        <div class="answer-option" onclick="selectPriority(0,'Falling behind competitors')" id="priority_0">
+          <div class="option-marker">A</div>
+          <div class="option-content">
+            <div class="option-label">We're falling behind competitors</div>
+            <div class="option-detail">Other companies in our space are moving. We're not. That gap is getting wider.</div>
+          </div>
+        </div>
+        <div class="answer-option" onclick="selectPriority(1,'Job security')" id="priority_1">
+          <div class="option-marker">B</div>
+          <div class="option-content">
+            <div class="option-label">My own job security</div>
+            <div class="option-detail">I want to be indispensable, not replaceable. I need to upskill before the window closes.</div>
+          </div>
+        </div>
+        <div class="answer-option" onclick="selectPriority(2,'Lead AI initiative')" id="priority_2">
+          <div class="option-marker">C</div>
+          <div class="option-content">
+            <div class="option-label">I want to lead this at my company</div>
+            <div class="option-detail">I see the opportunity. I want to own the AI initiative, not just participate.</div>
+          </div>
+        </div>
+        <div class="answer-option" onclick="selectPriority(3,'Handed the problem')" id="priority_3">
+          <div class="option-marker">D</div>
+          <div class="option-content">
+            <div class="option-label">I was handed "figure out AI" — I need a plan</div>
+            <div class="option-detail">Someone handed me this problem. I need a framework, not just tools.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="context-section">
+      <label class="context-label" for="contextBox">Optional — Add specific context (company size, team structure, recent events)</label>
+      <textarea class="context-input" id="contextBox" placeholder="Example: 200-person healthcare company. I'm the Operations Director and just got budget approval for AI tools but no guidance on what to buy..."></textarea>
+    </div>
+
+    <div class="nav-row"><button class="btn-next" id="next7" onclick="runRitual()"><span>Cast The Diagnostic ✦</span></button></div>
+  </div>
+
+  <!-- SCANNING -->
+  <div class="scanning-panel" id="scanningPanel">
+    <div class="scan-sigil">⬡</div>
+    <h2 class="scan-title">Reading Your Company's Signal</h2>
+    <div class="scan-bar-wrap"><div class="scan-bar" id="scanBar"></div></div>
+    <p class="scan-status" id="scanStatus">Analyzing your daily grind...</p>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-panel" id="resultsPanel">
+    <p class="header-eyebrow" style="margin-bottom:0.5rem;">Your AI Readiness Verdict</p>
+
+    <div id="stageBadgeWrap"></div>
+
+    <div class="score-row" id="scoreRow"></div>
+
+    <div class="quickwin-block" id="quickWinBlock">
+      <p class="quickwin-label">Your Quick Win Plan</p>
+      <p class="quickwin-text" id="quickWinText">Loading your personalized plan...</p>
+      <div id="quickWinBlockerNote"></div>
+      <ol class="quickwin-plan-steps" id="quickWinSteps"></ol>
+      <div class="quickwin-unlock" id="quickWinUnlock">
+        <p class="unlock-label">🔒 Unlock the full plan + Starter Grimoire</p>
+        <p class="unlock-text">Claim your <strong>Starter Grimoire</strong> — the full plan above, plus the cheat sheet, prompt formulas, and weekly spells delivered to your inbox.</p>
+        <div class="email-form-inline">
+          <input type="email" class="email-input-inline" placeholder="your@email.com" id="emailInput">
+          <button class="email-submit-inline" onclick="captureEmail()" id="unlockBtn">Claim Grimoire ✦</button>
+        </div>
+        <p style="font-size:0.7rem; color:var(--text-faint); margin-top:0.8rem; letter-spacing:0.05em;">No spam. Free forever. Unsubscribe anytime.</p>
+        <div class="email-success" id="emailSuccess">
+          ✦ Welcome to the Coven. Check your inbox — your Grimoire is on the way. ✦
+        </div>
+        <p id="emailError" style="display:none; color:#ff8888; font-size:0.85rem; margin-top:0.8rem;"></p>
+      </div>
+    </div>
+
+    <div class="magic-divider"><span>✦</span></div>
+
+    <div class="email-capture" id="emailCapture" style="display:none;">
+      <div class="share-block">
+        <p class="share-text">Know someone who needs this diagnosis?</p>
+        <button class="share-btn" onclick="shareResults()">📋 Copy Link to Share</button>
+      </div>
+    </div>
+
+    <div class="magic-divider"><span>✦</span></div>
+
+    <div class="analysis-block">
+      <p class="analysis-label">✦ The Witch's Full Read</p>
+      <div class="analysis-text" id="analysisText">Loading diagnosis...</div>
+    </div>
+
+    <div class="findings-grid" id="findingsGrid"></div>
+
+    <div class="magic-divider"><span>✦</span></div>
+
+    <div class="verdict-block" id="verdictBlock"></div>
+
+    <div id="errorNote" class="error-note">The oracle is temporarily unavailable. Try again in a moment.</div>
+
+    <div style="text-align:center; margin-top:2.5rem;">
+      <button class="btn-cta-secondary" onclick="startOver()">Run Another Ritual</button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2026 <span>Corporate Witch</span> — A Rebel Herd Media Property</p>
+  <p style="margin-top:0.5rem;">corporatewitch.media</p>
+</footer>
+
+<script>
+const answers = {};
+let selectedPriority = null;
+const questionLabels = ['Daily Grind','Leadership','Tool Adoption','The Blocker','Training','Process','Culture','Profile'];
+
+function selectAnswer(qIdx, optIdx, score, label) {
+  const panel = document.getElementById('q' + qIdx);
+  panel.querySelectorAll('.answer-option').forEach(el => el.classList.remove('selected'));
+  document.getElementById('q' + qIdx + '_' + optIdx).classList.add('selected');
+  answers[qIdx] = { optIdx, score, label: label || document.getElementById('q' + qIdx + '_' + optIdx).querySelector('.option-label').textContent };
+  const nextBtn = document.getElementById('next' + qIdx);
+  if (nextBtn) nextBtn.classList.add('ready');
+}
+
+function selectPriority(idx, label) {
+  document.querySelectorAll('[id^="priority_"]').forEach(el => el.classList.remove('selected'));
+  document.getElementById('priority_' + idx).classList.add('selected');
+  selectedPriority = { idx, label };
+  checkProfileComplete();
+}
+
+function checkProfileComplete() {
+  const role = document.getElementById('roleSelect').value;
+  const industry = document.getElementById('industrySelect').value;
+  const nextBtn = document.getElementById('next7');
+  if (role && industry && selectedPriority) {
+    nextBtn.classList.add('ready');
+  }
+}
+
+function nextQuestion(current) {
+  if (!answers[current] && current < 7) return;
+  document.getElementById('q' + current).classList.remove('active');
+  const next = current + 1;
+  if (next <= 7) {
+    document.getElementById('q' + next).classList.add('active');
+    updateProgress(next);
+  }
+}
+
+function updateProgress(current) {
+  document.getElementById('progressLabel').textContent = `Question ${current + 1} of 8`;
+  for (let i = 0; i < 8; i++) {
+    const step = document.getElementById('ps' + i);
+    step.className = 'progress-step';
+    if (i < current) step.classList.add('done');
+    else if (i === current) step.classList.add('active');
+  }
+}
+
+const stages = [
+  { id: 0, name: 'The Sleeping Company', icon: '💤', color: '#ff4444', min: 0, max: 5,
+    tagline: 'AI is not on your radar. That is about to be a serious problem.',
+    consultation: 'AI Emergency Session', ctaType: 'urgent' },
+  { id: 1, name: 'Awareness Without Action', icon: '👁️', color: '#ff8c00', min: 6, max: 11,
+    tagline: 'You know AI exists. You have not made it work for you yet.',
+    consultation: 'AI Wake-Up Call', ctaType: 'urgent' },
+  { id: 2, name: 'The Dabbling Stage', icon: '🧪', color: '#ffd700', min: 12, max: 19,
+    tagline: 'Some people are using AI tools. There is no strategy behind it yet.',
+    consultation: 'AI Strategy Intensive', ctaType: 'strategic' },
+  { id: 3, name: 'Emerging Fluency', icon: '⚡', color: '#44dd88', min: 20, max: 27,
+    tagline: 'Real adoption is happening. Now you need to systematize it.',
+    consultation: 'AI Scale & Systematize', ctaType: 'strategic' },
+  { id: 4, name: 'AI-Fluent Culture', icon: '✦', color: '#e91e8c', min: 28, max: 32,
+    tagline: 'You are ahead of most. The question now is how far you push.',
+    consultation: 'AI Competitive Edge', ctaType: 'optimization' },
+];
+
+function getStage(score) {
+  return stages.find(s => score >= s.min && score <= s.max) || stages[0];
+}
+
+// 3-step Quick Win plans — step 3 is the lead magnet (blurred until email)
+const quickWins = {
+  'Writing emails, reports, documentation': {
+    title: 'Turn your email inbox into your first AI workflow',
+    teaser: 'You spend hours writing the same kinds of emails. In 30 minutes today, you can cut that in half — permanently.',
+    steps: [
+      { time: '15 min', title: 'Open Claude.ai or ChatGPT (free tier is fine)', detail: 'No signup drama. Just go.' },
+      { time: '10 min', title: 'Paste 3 emails you send weekly — status updates, follow-ups, no-thank-yous', detail: 'Ask: "Turn these into reusable templates I can customize per recipient."' },
+      { time: '5 min',  title: 'Test drive tomorrow morning', detail: 'Use one template for a real email. Clock yourself. Compare to last week.' }
+    ],
+    tool: 'Claude or ChatGPT',
+    action: 'Draft 3 emails you send weekly. Time yourself writing one manually, then with AI. Compare.',
+    timeframe: 'This week'
+  },
+  'Meetings and administrative coordination': {
+    title: 'Never take meeting notes manually again',
+    teaser: 'Meetings eat your week. AI notetakers reclaim 3-5 hours. Most people can set this up before lunch.',
+    steps: [
+      { time: '10 min', title: 'Install Otter.ai or turn on Teams/Zoom AI Companion', detail: 'Both free tiers work for individual use. Otter is cross-platform.' },
+      { time: '15 min', title: 'Let it join your next 2 meetings', detail: 'Treat it like a silent intern. It will transcribe + summarize automatically.' },
+      { time: '10 min', title: 'Review the AI-generated summary after each', detail: 'Send yourself the action items as a calendar task. Watch your follow-through improve.' }
+    ],
+    tool: 'Otter.ai or Notion AI',
+    action: 'Record your next 3 meetings. Use AI to generate summaries and action items automatically.',
+    timeframe: 'Next 3 meetings'
+  },
+  'Data analysis and spreadsheet work': {
+    title: 'Make your painful spreadsheet talk to you',
+    teaser: 'The spreadsheet you avoid opening is an hour of analysis away from being done. AI will walk you through it.',
+    steps: [
+      { time: '5 min',  title: 'Open Claude.ai (best for spreadsheet analysis)', detail: 'ChatGPT Code Interpreter also works if you have Plus.' },
+      { time: '15 min', title: 'Upload the spreadsheet you have been avoiding', detail: 'Ask: "What are the 3 most important trends in this data? Explain like I am presenting to my boss."' },
+      { time: '20 min', title: 'Ask follow-up questions until you understand it', detail: 'Good prompts: "What would you visualize?" "What should I be worried about?" "What is the one slide worth presenting?"' }
+    ],
+    tool: 'Claude or ChatGPT Code Interpreter',
+    action: 'Upload your most painful spreadsheet. Ask AI to analyze trends and visualize insights.',
+    timeframe: 'This afternoon'
+  },
+  'Research and staying current': {
+    title: 'Replace 80% of your Google searches with Perplexity',
+    teaser: 'Perplexity is what Google was supposed to be. Every search comes with sources and a synthesis. Free tier is enough.',
+    steps: [
+      { time: '2 min',  title: 'Go to perplexity.ai — no account needed to start', detail: 'Bookmark it. Pin the tab.' },
+      { time: '20 min', title: 'Replace your next 5 work-related searches', detail: 'Ask real questions: "What are the implications of [policy] for my industry?" Watch it cite actual sources.' },
+      { time: '10 min', title: 'Set up a daily 10-minute briefing', detail: 'Ask: "What happened in [my industry] today that I should know about before my 9am?" Do this every weekday for a week.' }
+    ],
+    tool: 'Perplexity AI',
+    action: 'Replace 3 Google searches with Perplexity. Notice the sourced, synthesized answers.',
+    timeframe: 'Today'
+  },
+  'Creative: presentations, visuals, content': {
+    title: 'Go from blank deck to finished draft in 45 minutes',
+    teaser: 'The first hour of every deck is staring at a blank slide. That hour is now 5 minutes.',
+    steps: [
+      { time: '5 min',  title: 'Open Claude or ChatGPT', detail: 'For this workflow, either works. Canva AI also works if you are already on Canva.' },
+      { time: '15 min', title: 'Describe your deck in one paragraph', detail: 'Who is the audience? What is the one idea? What action do you want them to take? AI will generate a slide-by-slide outline.' },
+      { time: '20 min', title: 'Paste the outline into Canva AI or Gamma.app', detail: 'Both turn outlines into real-looking slides in under 5 minutes. Then spend your energy on the 3 slides that actually matter.' }
+    ],
+    tool: 'Canva AI or Gamma.app',
+    action: 'Describe your next presentation deck to AI. Generate outlines, then visuals.',
+    timeframe: 'Next deck'
+  }
+};
+
+// Blocker-aware coaching that prepends to the Quick Win
+const blockerOverlays = {
+  'Trust/Tool confusion': 'Before you start: pick ONE tool for the week. Master it. Claude for writing, Perplexity for research. Ignore everything else for 7 days.',
+  'IT/Company blocks': 'Heads up: if your company blocks ChatGPT/Claude, do this on your personal phone or laptop. Never paste confidential data into personal AI tools.',
+  'Bad first experience': 'Your first try probably failed because the prompt was too vague. Watch how specific the prompts below are. That is the whole difference.',
+  'No time to learn': 'Every step below is time-boxed. If you skip step 3, you still win. Just do step 1 today.',
+  'Fear of mistakes': 'Safety rule you will never regret: never paste anything you would not email your grandmother. Use AI for drafting and brainstorming, not final decisions with sensitive data.',
+  'Nothing — I use AI daily': 'You are past the Quick Win stage. Your plan below is a level-up, not a starter pack.'
+};
+
+// Keep blockerStrategies for compatibility with existing render code (consultation angle)
+const blockerStrategies = {
+  'Trust/Tool confusion':   { advice: blockerOverlays['Trust/Tool confusion'],   consultationAngle: 'Tool Audit & Selection' },
+  'IT/Company blocks':      { advice: blockerOverlays['IT/Company blocks'],      consultationAngle: 'Corporate AI Policy Strategy' },
+  'Bad first experience':   { advice: blockerOverlays['Bad first experience'],   consultationAngle: 'Prompt Engineering Crash Course' },
+  'No time to learn':       { advice: blockerOverlays['No time to learn'],       consultationAngle: 'Micro-Learning AI Integration' },
+  'Fear of mistakes':       { advice: blockerOverlays['Fear of mistakes'],       consultationAngle: 'Safe AI Practices for Corporates' },
+  'Nothing — I use AI daily': { advice: blockerOverlays['Nothing — I use AI daily'], consultationAngle: 'Advanced Workflow Architecture' }
+};
+
+const scanMessages = [
+  'Mapping your daily grind...',
+  'Auditing leadership signals...',
+  'Mapping tool adoption gaps...',
+  'Identifying your blocker...',
+  'Measuring training investment...',
+  'Tracing process integration...',
+  'Reading cultural temperature...',
+  'Assembling your verdict...'
+];
+
+async function animateScan() {
+  const bar = document.getElementById('scanBar');
+  const status = document.getElementById('scanStatus');
+  for (let i = 0; i < scanMessages.length; i++) {
+    status.style.opacity = '0';
+    await sleep(200);
+    status.textContent = scanMessages[i];
+    status.style.opacity = '1';
+    bar.style.width = ((i + 1) / scanMessages.length * 85) + '%';
+    await sleep(500);
+  }
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function runRitual() {
+  const role = document.getElementById('roleSelect').value;
+  const industry = document.getElementById('industrySelect').value;
+
+  if (!role || !industry || !selectedPriority) {
+    alert('Please complete all profile fields and select your priority.');
+    return;
+  }
+
+  const scores = [0,1,2,3,4,5,6].map(i => answers[i] ? answers[i].score : 0);
+  const totalScore = scores.reduce((a,b) => a+b, 0);
+  const maxScore = 32;
+  const stage = getStage(totalScore);
+  const contextNote = document.getElementById('contextBox').value.trim();
+  const dailyGrind = answers[0] ? answers[0].label : '';
+  const blocker = answers[3] ? answers[3].label : '';
+
+  // Stash for captureEmail() metadata
+  window._lastRitualStage = stage;
+  window._lastRitualScore = totalScore;
+
+  document.getElementById('q7').classList.remove('active');
+  document.getElementById('progressTrack').style.display = 'none';
+  document.getElementById('progressLabel').style.display = 'none';
+  document.getElementById('scanningPanel').classList.add('active');
+  animateScan();
+
+  const answerSummary = [0,1,2,3,4,5,6].map(i => {
+    const q = questionLabels[i];
+    const a = answers[i] ? answers[i].label : 'Not answered';
+    return `${q}: ${a}`;
+  }).join('\n');
+
+  const prompt = `You are Corporate Witch, an expert AI business strategist and fluency coach. You are brutally honest, sharp, funny when appropriate, and focused on real business impact — not corporate feel-good fluff.
+
+A business professional just completed an AI Readiness Ritual assessment. Here are their responses:
+
+${answerSummary}
+Priority: ${selectedPriority.label}
+Role: ${role}
+Industry: ${industry}
+Additional context: ${contextNote || 'None provided.'}
+
+Overall score: ${totalScore}/32
+Stage: ${stage.name}
+Daily Grind: ${dailyGrind}
+Blocker: ${blocker}
+
+Deliver a structured assessment in this EXACT JSON format (no preamble, no markdown, raw JSON only):
+
+{
+  "headline": "A sharp, memorable 10-12 word verdict for this specific company situation",
+  "analysis": "3-4 sentences of honest, pointed analysis. Reference their specific answers. Be direct — tell them what the data actually means. One well-placed dry observation is welcome. Do not be generic. This should feel like it was written FOR them.",
+  "gaps": [
+    {"title": "Gap label (3-5 words)", "detail": "One specific sentence about this vulnerability."},
+    {"title": "Gap label (3-5 words)", "detail": "One specific sentence about this vulnerability."}
+  ],
+  "strengths": [
+    {"title": "Strength label (3-5 words)", "detail": "One specific sentence about what they have going for them."},
+    {"title": "Strength label (3-5 words)", "detail": "One specific sentence about what they have going for them."}
+  ],
+  "verdict_headline": "The witch's verdict — one powerful sentence about where they need to go",
+  "verdict_copy": "2 sentences max. What happens next if they don't act. What Merry specifically helps with.",
+  "cta_primary": "${stage.consultation}",
+  "cta_type": "${stage.ctaType}"
+}`;
+
+  let result;
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await response.json();
+    const raw = data.content.map(c => c.text || '').join('');
+    const clean = raw.replace(/\`\`\`json|\`\`\`/g, '').trim();
+    result = JSON.parse(clean);
+  } catch(e) {
+    result = null;
+  }
+
+  document.getElementById('scanBar').style.width = '100%';
+  await sleep(400);
+  document.getElementById('scanningPanel').classList.remove('active');
+
+  renderResults(stage, totalScore, maxScore, result, dailyGrind, blocker, role, industry);
+}
+
+function renderResults(stage, score, maxScore, aiResult, dailyGrind, blocker, role, industry) {
+  const panel = document.getElementById('resultsPanel');
+
+  document.getElementById('stageBadgeWrap').innerHTML = `
+    <div class="stage-badge" style="border-color: ${stage.color}33; background: ${stage.color}08;">
+      <div class="stage-icon">${stage.icon}</div>
+      <div class="stage-info">
+        <div class="stage-label-text" style="color:${stage.color}">AI Readiness Stage ${stage.id}</div>
+        <div class="stage-name" style="color:${stage.color}">${stage.name}</div>
+      </div>
+    </div>
+  `;
+
+  const pct = Math.round((score / maxScore) * 100);
+  document.getElementById('scoreRow').innerHTML = `
+    <div class="score-cell">
+      <span class="score-val" style="color:${stage.color}">${score}</span>
+      <span class="score-lbl">Score / 32</span>
+    </div>
+    <div class="score-cell">
+      <span class="score-val" style="color:${stage.color}">${pct}%</span>
+      <span class="score-lbl">Readiness</span>
+    </div>
+    <div class="score-cell">
+      <span class="score-val" style="color:${stage.color}">${stage.id}</span>
+      <span class="score-lbl">of 4 Stages</span>
+    </div>
+    <div class="score-cell">
+      <span class="score-val" style="color:${stage.color}">${4 - Math.min(stage.id, 4) > 0 ? 4 - Math.min(stage.id, 4) : '—'}</span>
+      <span class="score-lbl">${stage.id < 4 ? 'Stages to Lead' : 'You are There'}</span>
+    </div>
+  `;
+
+  const win = quickWins[dailyGrind] || quickWins['Writing emails, reports, documentation'];
+  const block = blockerStrategies[blocker] || blockerStrategies['Trust/Tool confusion'];
+  const overlay = blockerOverlays[blocker] || '';
+
+  document.getElementById('quickWinText').textContent = win.title;
+  if (overlay) {
+    document.getElementById('quickWinBlockerNote').innerHTML =
+      `<div class="blocker-note"><strong>Before you start:</strong> ${overlay}</div>`;
+  } else {
+    document.getElementById('quickWinBlockerNote').innerHTML = '';
+  }
+
+  // Render the 3 steps — step 3 is locked/blurred until email
+  const stepsHtml = win.steps.map((step, i) => {
+    const isLocked = (i === 2);
+    return `
+      <li>
+        <span class="qw-step-num ${isLocked ? 'qw-step-locked' : ''}">${isLocked ? '🔒' : (i + 1)}</span>
+        <div class="qw-step-content ${isLocked ? 'locked' : ''}">
+          <span class="qw-time">${step.time}</span><strong>${step.title}</strong>
+          <div class="qw-detail">${step.detail}</div>
+        </div>
+      </li>`;
+  }).join('');
+  document.getElementById('quickWinSteps').innerHTML = stepsHtml;
+
+  if (aiResult) {
+    document.getElementById('analysisText').innerHTML = 
+      `<strong>${aiResult.headline}</strong><br><br>${aiResult.analysis}`;
+
+    let findingsHTML = '';
+    (aiResult.gaps || []).forEach(g => {
+      findingsHTML += `<div class="finding-card gap"><div class="finding-type">⚠ Gap</div><div class="finding-text"><strong>${g.title}</strong><br>${g.detail}</div></div>`;
+    });
+    (aiResult.strengths || []).forEach(s => {
+      findingsHTML += `<div class="finding-card strength"><div class="finding-type">✓ Strength</div><div class="finding-text"><strong>${s.title}</strong><br>${s.detail}</div></div>`;
+    });
+    findingsHTML += `<div class="finding-card priority"><div class="finding-type">🎯 Priority</div><div class="finding-text"><strong>${selectedPriority.label}</strong><br>${role} in ${industry}. This shapes your consultation focus.</div></div>`;
+    document.getElementById('findingsGrid').innerHTML = findingsHTML;
+
+    const ctaUrgency = aiResult.cta_type === 'urgent' 
+      ? 'Your company is behind. Every month you wait is a month your competitors gain ground.'
+      : aiResult.cta_type === 'strategic'
+      ? 'You have momentum. What you need now is a system — not more tools.'
+      : 'You are ahead of most. Let us make sure you stay there.';
+
+    const emailSubject = encodeURIComponent(`AI Readiness Consultation - ${stage.name}`);
+    const emailBody = encodeURIComponent(`Hi Corporate Witch,\n\nI just completed the AI Readiness Ritual and received my results:\n\n• Stage: ${stage.name} (Stage ${stage.id}/4)\n• Score: ${score}/32 (${pct}% readiness)\n• Role: ${role}\n• Industry: ${industry}\n• Primary Concern: ${selectedPriority.label}\n• Biggest Blocker: ${blocker}\n\nI would like to book a ${aiResult.cta_primary} consultation.\n\nAdditional context: ${document.getElementById('contextBox').value || 'None provided'}\n\nBest regards`);
+
+    document.getElementById('verdictBlock').innerHTML = `
+      <span class="verdict-sigil">🔮</span>
+      <p class="verdict-label">The Witch's Verdict</p>
+      <h3 class="verdict-text">${aiResult.verdict_headline}</h3>
+      <p class="verdict-copy">${aiResult.verdict_copy}</p>
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:2rem; font-style:italic; font-weight:300;">${ctaUrgency}</p>
+      <div class="cta-row">
+        <a href="https://calendar.app.google/TcaeBeHBTFqWdH3DA" target="_blank" class="btn-cta-primary">Book ${aiResult.cta_primary} →</a>
+        <a href="../index.html#coven" class="btn-cta-secondary">Join The Coven</a>
+      </div>
+    `;
+
+  } else {
+    document.getElementById('errorNote').style.display = 'block';
+    document.getElementById('analysisText').innerHTML = `
+      <strong>${stage.tagline}</strong><br><br>
+      Based on your answers, your company is at Stage ${stage.id}: <strong>${stage.name}</strong>.
+      Your score of ${score}/32 puts you in the ${Math.round(score/maxScore*100)}th percentile for AI readiness.
+      As a ${role} in ${industry}, your priority is ${selectedPriority.label}.
+      The path forward requires intentional action — not just more tools.
+    `;
+    document.getElementById('findingsGrid').innerHTML = `
+      <div class="finding-card priority"><div class="finding-type">🎯 Priority</div><div class="finding-text"><strong>${selectedPriority.label}</strong><br>${role} in ${industry}. This shapes your consultation focus.</div></div>
+    `;
+    document.getElementById('verdictBlock').innerHTML = `
+      <span class="verdict-sigil">🔮</span>
+      <p class="verdict-label">The Witch's Verdict</p>
+      <h3 class="verdict-text">Stage ${stage.id}. ${stage.tagline}</h3>
+      <p class="verdict-copy">Let's talk about where to go from here.</p>
+      <div class="cta-row">
+        <a href="https://calendar.app.google/TcaeBeHBTFqWdH3DA" target="_blank" class="btn-cta-primary">Book a Strategy Call →</a>
+        <a href="../index.html#coven" class="btn-cta-secondary">Join The Coven</a>
+      </div>
+    `;
+  }
+
+  panel.classList.add('active');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ===================================================
+   BEEHIIV CONFIG — replace these two values when
+   you set up beehiiv. See README.md for the walkthrough.
+   =================================================== */
+window.CW_CONFIG = {
+  BEEHIIV_PUB_ID: '9f059c58-427b-4fd3-8546-a60d33fb3a66',
+  BEEHIIV_FORM_URL: 'https://subscribe-forms.beehiiv.com/9f059c58-427b-4fd3-8546-a60d33fb3a66'
+};
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email || '').trim());
+}
+
+function getUTMs() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    utm_source: p.get('utm_source') || '',
+    utm_medium: p.get('utm_medium') || '',
+    utm_campaign: p.get('utm_campaign') || 'ritual_quickwin_unlock',
+    referring_site: document.referrer || ''
+  };
+}
+
+async function captureEmail() {
+  const input   = document.getElementById('emailInput');
+  const btn     = document.getElementById('unlockBtn');
+  const errorEl = document.getElementById('emailError');
+  const email   = (input.value || '').trim();
+
+  errorEl.style.display = 'none';
+  input.style.borderColor = '';
+
+  if (!isValidEmail(email)) {
+    input.style.borderColor = '#ff4444';
+    errorEl.textContent = 'Please enter a valid email address.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Casting...';
+
+  // Pull the user's ritual context for beehiiv metadata
+  const stageName = (window._lastRitualStage && window._lastRitualStage.name) || 'unknown';
+  const stageScore = (typeof window._lastRitualScore === 'number') ? window._lastRitualScore : 'unknown';
+  const metadata = Object.assign({}, getUTMs(), {
+    ritual_stage: stageName,
+    ritual_score: stageScore
+  });
+
+  let ok = true;
+  try {
+    if (CW_CONFIG.BEEHIIV_PUB_ID === 'REPLACE_WITH_PUB_ID') {
+      console.warn('[CW] beehiiv not configured — simulating success. See README.md');
+      console.log('[CW] Would submit:', { email, metadata });
+      await new Promise(r => setTimeout(r, 600));
+    } else {
+      const formData = new FormData();
+      formData.append('email', email);
+      Object.entries(metadata).forEach(([k, v]) => { if (v) formData.append(k, v); });
+      await fetch(CW_CONFIG.BEEHIIV_FORM_URL, {
+        method: 'POST', body: formData, mode: 'no-cors'
+      });
+    }
+  } catch (err) {
+    console.error('[CW] Subscribe error:', err);
+    ok = false;
+  }
+
+  if (!ok) {
+    btn.disabled = false;
+    btn.textContent = 'Claim Grimoire ✦';
+    errorEl.textContent = 'Something went sideways. Try again in a moment.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  // SUCCESS — unblur step 3
+  document.querySelectorAll('#quickWinSteps .qw-step-content.locked').forEach(el => {
+    el.classList.remove('locked');
+  });
+  document.querySelectorAll('#quickWinSteps .qw-step-num.qw-step-locked').forEach(el => {
+    el.classList.remove('qw-step-locked');
+    el.textContent = '3';
+  });
+  // Hide the unlock form, show success message
+  const form = document.querySelector('#quickWinUnlock .email-form-inline');
+  if (form) form.style.display = 'none';
+  const fine = form && form.nextElementSibling;
+  if (fine) fine.style.display = 'none';
+  document.getElementById('emailSuccess').style.display = 'block';
+}
+
+function shareResults() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    alert('Link copied! Share this ritual with someone who needs it.');
+  });
+}
+
+function startOver() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  selectedPriority = null;
+  document.getElementById('contextBox').value = '';
+  document.getElementById('roleSelect').value = '';
+  document.getElementById('industrySelect').value = '';
+  document.getElementById('emailInput').value = '';
+  document.getElementById('emailForm').style.display = 'flex';
+  document.getElementById('emailSuccess').style.display = 'none';
+  document.getElementById('resultsPanel').classList.remove('active');
+  document.getElementById('scanningPanel').classList.remove('active');
+  document.getElementById('errorNote').style.display = 'none';
+  document.getElementById('progressTrack').style.display = 'flex';
+  document.getElementById('progressLabel').style.display = 'block';
+  for(let i = 0; i < 8; i++) {
+    const p = document.getElementById('q' + i);
+    p.classList.remove('active');
+    p.querySelectorAll('.answer-option').forEach(el => el.classList.remove('selected'));
+    const nb = document.getElementById('next' + i);
+    if (nb && i < 7) nb.classList.remove('ready');
+  }
+  document.querySelectorAll('[id^="priority_"]').forEach(el => el.classList.remove('selected'));
+  document.getElementById('q0').classList.add('active');
+  updateProgress(0);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+<script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Spell Bank — Corporate Witch (Private)</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#080608">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --magenta: #c0186c;
+    --magenta-bright: #e91e8c;
+    --magenta-glow: #ff2d9b;
+    --dark: #080608;
+    --dark-2: #0f0a0e;
+    --dark-3: #1a0f18;
+    --text: #f0e6ee;
+    --text-dim: #9a7a94;
+    --text-faint: #5a3a54;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  .sb-header {
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    background: linear-gradient(180deg, var(--dark-2) 0%, var(--dark) 100%);
+    border-bottom: 1px solid rgba(192,24,108,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sb-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(192,24,108,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .back-link:hover { color: var(--magenta-bright); }
+
+  .private-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: rgba(192,24,108,0.1);
+    border: 1px solid var(--magenta);
+    color: var(--magenta-bright);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .sb-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    position: relative;
+  }
+  .sb-title span {
+    color: var(--magenta-bright);
+    text-shadow: 0 0 30px rgba(233,30,140,0.5);
+  }
+
+  .sb-sub {
+    font-size: 1rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  .sb-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* Stats */
+  .stats-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    background: var(--dark-2);
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(192,24,108,0.15);
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--magenta-bright);
+    display: block;
+  }
+  .stat-lbl {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    background: var(--dark-2);
+    backdrop-filter: blur(12px);
+    padding: 1rem;
+    border: 1px solid rgba(192,24,108,0.15);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-right: 0.5rem;
+  }
+
+  .filter-btn {
+    padding: 0.4rem 0.9rem;
+    background: var(--dark-3);
+    border: 1px solid rgba(192,24,108,0.2);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: inherit;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--magenta-bright);
+    color: var(--text);
+  }
+
+  .filter-btn.active {
+    background: var(--magenta-bright);
+    color: white;
+    border-color: var(--magenta-bright);
+  }
+
+  /* Hook cards */
+  .hooks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .hook-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(192,24,108,0.15);
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    transition: all 0.3s;
+  }
+
+  .hook-card:hover {
+    border-color: rgba(233,30,140,0.35);
+    transform: translateY(-2px);
+  }
+
+  .hook-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 1px dashed rgba(192,24,108,0.15);
+    padding-bottom: 0.6rem;
+  }
+
+  .hook-platform {
+    color: var(--magenta-bright);
+    font-weight: 700;
+  }
+
+  .hook-stage {
+    background: rgba(192,24,108,0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  .hook-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.4;
+    font-weight: 700;
+  }
+
+  .hook-body {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .hook-cta {
+    font-size: 0.8rem;
+    color: var(--magenta-bright);
+    font-style: italic;
+    padding-top: 0.6rem;
+    border-top: 1px dashed rgba(192,24,108,0.15);
+    margin-top: auto;
+  }
+
+  .hook-copy-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(192,24,108,0.1);
+    border: 1px solid rgba(192,24,108,0.3);
+    color: var(--magenta-bright);
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: inherit;
+    transition: all 0.25s;
+  }
+
+  .hook-copy-btn:hover {
+    background: var(--magenta-bright);
+    color: white;
+  }
+
+  .hook-copy-btn.copied {
+    background: #44dd88;
+    color: white;
+    border-color: #44dd88;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-dim);
+  }
+
+  /* Batch guide */
+  .batch-guide {
+    margin-top: 4rem;
+    padding: 2.5rem;
+    background: var(--dark-2);
+    border-left: 3px solid var(--magenta-bright);
+  }
+
+  .batch-guide h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .batch-guide p {
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
+
+  .batch-guide ul {
+    margin: 1rem 0 0 1.5rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .batch-guide strong { color: var(--magenta-bright); }
+
+  footer {
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(192,24,108,0.1);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+  footer span { color: var(--magenta); }
+</style>
+</head>
+<body>
+
+<header class="sb-header">
+  <a href="../index.html" class="back-link">← Corporate Witch</a>
+  <div class="private-badge">🔒 Private · For Merry's Eyes</div>
+  <h1 class="sb-title">The <span>Spell Bank</span></h1>
+  <p class="sb-sub">30 content hooks × 3 platforms × 5 audience stages. Your batch-creation library. Filter, click to copy, adapt to your voice.</p>
+</header>
+
+<main class="sb-body">
+
+  <div class="stats-bar">
+    <div class="stat-box"><span class="stat-num" id="totalCount">30</span><span class="stat-lbl">Total Hooks</span></div>
+    <div class="stat-box"><span class="stat-num">3</span><span class="stat-lbl">Platforms</span></div>
+    <div class="stat-box"><span class="stat-num">5</span><span class="stat-lbl">Stages</span></div>
+    <div class="stat-box"><span class="stat-num" id="filteredCount">30</span><span class="stat-lbl">Showing</span></div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-group">
+      <span class="filter-label">Platform:</span>
+      <button class="filter-btn active" data-filter-type="platform" data-filter-val="all" onclick="applyFilter(this)">All</button>
+      <button class="filter-btn" data-filter-type="platform" data-filter-val="tiktok" onclick="applyFilter(this)">TikTok</button>
+      <button class="filter-btn" data-filter-type="platform" data-filter-val="instagram" onclick="applyFilter(this)">Instagram</button>
+      <button class="filter-btn" data-filter-type="platform" data-filter-val="linkedin" onclick="applyFilter(this)">LinkedIn</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Stage:</span>
+      <button class="filter-btn active" data-filter-type="stage" data-filter-val="all" onclick="applyFilter(this)">All</button>
+      <button class="filter-btn" data-filter-type="stage" data-filter-val="0" onclick="applyFilter(this)">Sleeping</button>
+      <button class="filter-btn" data-filter-type="stage" data-filter-val="1" onclick="applyFilter(this)">Awareness</button>
+      <button class="filter-btn" data-filter-type="stage" data-filter-val="2" onclick="applyFilter(this)">Dabbling</button>
+      <button class="filter-btn" data-filter-type="stage" data-filter-val="3" onclick="applyFilter(this)">Emerging</button>
+      <button class="filter-btn" data-filter-type="stage" data-filter-val="4" onclick="applyFilter(this)">Fluent</button>
+    </div>
+  </div>
+
+  <div class="hooks-grid" id="hooksGrid"></div>
+
+  <div class="batch-guide">
+    <h3>How To Use This Bank (The Batch Strategy)</h3>
+    <p>You said you'd "batch heavy monthly, light weekly." Here's the workflow that makes this realistic:</p>
+    <ul>
+      <li><strong>First Saturday of the month (2 hours):</strong> Pick 12 hooks. Film 8 TikToks back-to-back. One outfit, one lighting setup, done.</li>
+      <li><strong>Every Sunday (30 minutes):</strong> Take 1 TikTok, adapt it for LinkedIn (witchy language dialed down 40% — that's the "Weekly Workflow" voice). Schedule for Tuesday 8am.</li>
+      <li><strong>Every Wednesday (15 minutes):</strong> Repost best-performing TikTok to Instagram Reels. That's it.</li>
+      <li><strong>Rule:</strong> LinkedIn versions replace "spell" with "workflow," "coven" with "community," "witch" with "veteran." Same soul, different dialect.</li>
+    </ul>
+    <p style="margin-top: 1.2rem;"><strong>One more thing:</strong> Click any hook's "Copy" button to grab the full script — hook + body + CTA already formatted for you. Open a note, paste, tweak. Don't reinvent.</p>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2026 <span>Corporate Witch</span> — Private Tools</p>
+</footer>
+
+<script>
+const hooks = [
+  // STAGE 0 — SLEEPING
+  { platform: 'tiktok', stage: 0, stageName: 'Sleeping',
+    hook: "POV: You're 54, your company just blocked ChatGPT on the VPN, and you're about to be replaced by someone who found a workaround.",
+    body: "The real threat isn't AI. It's the coworker who figured out how to use it anyway. Here's what I'd do in the next 7 days if I were you (personal laptop, personal accounts, zero confidential data): [walk through 3 moves]",
+    cta: "Save this. Then follow for the weekly spells they won't teach you at work." },
+  { platform: 'instagram', stage: 0, stageName: 'Sleeping',
+    hook: "Your company is moving like a glacier. AI is moving like fire. Guess which one wins.",
+    body: "Every corporate career I've had, the people who survived the shift weren't the smartest in the room — they were the ones who saw it coming 18 months early. AI is that shift. You're in month 1 of the 18.",
+    cta: "Three minute ritual in bio. Find out where you actually stand." },
+  { platform: 'linkedin', stage: 0, stageName: 'Sleeping',
+    hook: "The hardest conversation I've been having with peers my age: your company's AI caution isn't protecting you. It's delaying your learning curve.",
+    body: "I've watched 4 industries get reshaped in real time. The pattern is always the same — the people who waited for official permission were 18 months behind the people who learned on nights and weekends. I'm not suggesting you violate policy. I'm suggesting you build your own fluency on your own time, with your own tools, on your own data. That's not rebellion. That's career insurance.",
+    cta: "What's the first AI tool you'd want to learn if you had a weekend?" },
+  { platform: 'tiktok', stage: 0, stageName: 'Sleeping',
+    hook: "Things my boomer mentor told me that hit different now: 'When the tide comes in, it doesn't matter how smart you are. It matters whether you knew it was coming.'",
+    body: "AI is the tide. Most mid-career people I know are still arguing about whether it's real. Meanwhile their companies are quietly hiring 24-year-olds who already know the tools. This isn't about panic. It's about math.",
+    cta: "Follow for the spells they don't teach at work." },
+  { platform: 'instagram', stage: 0, stageName: 'Sleeping',
+    hook: "If your company is still debating whether AI is a 'passing trend,' your job security is a passing trend.",
+    body: "Reality check from someone who's been in corporate for 30 years: the companies saying 'we're evaluating' are the same ones that said it about email in '95, websites in '99, mobile in '09, and cloud in '14. Every time, the people who learned before the official rollout were the ones who got promoted during it.",
+    cta: "AI Readiness Ritual in bio. 3 minutes. You'll know exactly where you stand." },
+
+  // STAGE 1 — AWARENESS
+  { platform: 'tiktok', stage: 1, stageName: 'Awareness',
+    hook: "You've heard of AI. You tried it once. It gave you garbage. You gave up. I need to tell you something.",
+    body: "That wasn't AI's fault. That was a prompt problem. Watch: same tool, same task, bad prompt vs. good prompt — the difference is embarrassing. [demo two prompts side by side]",
+    cta: "Save this. Try it tomorrow. Tag me if it works." },
+  { platform: 'instagram', stage: 1, stageName: 'Awareness',
+    hook: "'I tried AI and it didn't work.' — said every person who typed one sentence and gave up.",
+    body: "AI isn't a search engine. It's a brilliant intern who needs context. You wouldn't walk up to a new employee and say 'fix my email' — you'd give them background. Same rule here.",
+    cta: "The Starter Grimoire in bio has the 3 prompt formulas that fix 80% of bad outputs." },
+  { platform: 'linkedin', stage: 1, stageName: 'Awareness',
+    hook: "Most professionals I know aren't 'bad at AI.' They've just been using it the wrong way — and giving up for the wrong reasons.",
+    body: "Here's what changed for me: I stopped treating AI like Google and started treating it like a new hire on my team. Suddenly the outputs got sharp. The trick is three sentences of context before any real ask — role, situation, constraints. Try it on your next prompt and see what happens.",
+    cta: "What's the worst AI experience you've had so far?" },
+  { platform: 'tiktok', stage: 1, stageName: 'Awareness',
+    hook: "Nobody over 45 taught you how to prompt AI because nobody over 45 is teaching this stuff yet. Until now. I'm 54.",
+    body: "Everything you've seen about 'prompt engineering' has been made by 24-year-olds for 24-year-olds. I'm making it for us. Let me show you my favorite formula — R-T-F. Role, Task, Format. [demo]",
+    cta: "Follow for more spells built for grown corporate adults." },
+  { platform: 'instagram', stage: 1, stageName: 'Awareness',
+    hook: "Reminder: you don't need to understand how AI works. You need to know how to USE it. Just like electricity.",
+    body: "Nobody explains Maxwell's equations before they let you plug in a lamp. Same rule applies here. Stop trying to learn the theory. Start using the thing.",
+    cta: "One free resource in bio — 5 tools, 3 formulas, and you're ahead of 80% of your peers." },
+  { platform: 'linkedin', stage: 1, stageName: 'Awareness',
+    hook: "I've been asked 3 times this month: 'should I pay for ChatGPT Plus or learn Claude?'",
+    body: "My honest answer: both have generous free tiers that will do 90% of what a working professional needs. Start free. Get fluent. Pay for Plus only when you hit the ceiling — not before. Most people pay $20/mo for a tool they're still using like Google.",
+    cta: "What AI tool are you using most right now — and what's working?" },
+
+  // STAGE 2 — DABBLING
+  { platform: 'tiktok', stage: 2, stageName: 'Dabbling',
+    hook: "You use ChatGPT every day. You're still 10x below your potential. Here's why:",
+    body: "You treat it like a chat app instead of a workflow tool. Three upgrades that cost nothing: (1) save your best prompts as templates. (2) give it your resume/bio so it tailors outputs to YOU. (3) learn to say 'rewrite that but shorter and more direct' — the magic edit.",
+    cta: "Which of those three are you not doing yet?" },
+  { platform: 'instagram', stage: 2, stageName: 'Dabbling',
+    hook: "If your AI usage is one tool, one tab, one prompt at a time — you're still in beginner mode. That's fine. Here's the graduation plan.",
+    body: "Next level: stacking tools. Perplexity researches → Claude writes → Canva designs. Each tool handles what it's best at. This is where the real hours get saved.",
+    cta: "The Grimoire in bio has the full decision tree." },
+  { platform: 'linkedin', stage: 2, stageName: 'Dabbling',
+    hook: "The biggest mistake I see mid-career professionals make with AI: using one tool for everything.",
+    body: "ChatGPT for research — wrong, use Perplexity. ChatGPT for long documents — okay but Claude is better. ChatGPT for presentations — yes for outlines, but Gamma takes it to done. Once you start matching tools to tasks instead of defaulting to one, your output quality doubles overnight.",
+    cta: "What's your current go-to tool and what are you using it for?" },
+  { platform: 'tiktok', stage: 2, stageName: 'Dabbling',
+    hook: "Watch me turn a blank PowerPoint into a presentable deck in 4 minutes using only free tools.",
+    body: "(1) Open Gamma.app. (2) Type one paragraph describing the deck. (3) Gamma generates 8 slides. (4) I polish the 3 slides that actually matter. Total time: under 5 minutes. My old workflow: 2 hours of slide hell.",
+    cta: "Save this. Use it on your next deck. Report back." },
+  { platform: 'instagram', stage: 2, stageName: 'Dabbling',
+    hook: "The single best AI habit I've built: the 'critique then rewrite' move.",
+    body: "Paste anything you wrote. Ask: 'critique this honestly — what's weak, what's missing, what would a sharp editor cut.' Then: 'now rewrite using your critique.' 90% of the time, the rewrite is 30% shorter and twice as clear.",
+    cta: "Try it on your next email. Come back and tell me the before/after word count." },
+  { platform: 'linkedin', stage: 2, stageName: 'Dabbling',
+    hook: "I've been keeping a 'prompt notebook' for 14 months. It's the quiet advantage nobody talks about.",
+    body: "Every time I write a prompt that produces a great output, I copy it into a plain text doc with a label. Over time, I've built a library of ~200 reusable prompts. New project? I grab the right template, tweak 3 words, go. This one habit has saved me more hours than any tool.",
+    cta: "Start a notebook today. Three prompts in, you'll feel the shift." },
+
+  // STAGE 3 — EMERGING
+  { platform: 'tiktok', stage: 3, stageName: 'Emerging',
+    hook: "You're the 'AI person' at your company now. Good. Bad news: that's a dangerous position. Let me explain.",
+    body: "Being the go-to creates leverage — and a ceiling. Leverage because you're indispensable. Ceiling because you're seen as the 'AI help desk,' not the strategic operator. The move: document what you do. Train two others. Become the one who BUILT the capability, not the one who IS it.",
+    cta: "Save this before your boss reads it." },
+  { platform: 'instagram', stage: 3, stageName: 'Emerging',
+    hook: "The second you're confident with AI, start thinking about systems — not tools.",
+    body: "A workflow that takes you 30 minutes with AI should become a template that takes your teammate 10. That's how you turn fluency into leadership. Not by doing more, but by making others capable of doing more.",
+    cta: "Book a consultation if you're ready to systematize. Link in bio." },
+  { platform: 'linkedin', stage: 3, stageName: 'Emerging',
+    hook: "Real talk for mid-career professionals who've 'figured out AI': your next move is not using it more — it's teaching others.",
+    body: "I see too many capable people hoarding their AI knowledge because they're afraid of being replaced. Wrong frame. The people who scale their AI fluency through their teams become managers, directors, VPs. The ones who keep it to themselves become senior individual contributors — valuable, but ceiling-bound.",
+    cta: "Are you in hoarding mode or teaching mode right now? Honest answers only." },
+  { platform: 'tiktok', stage: 3, stageName: 'Emerging',
+    hook: "Nobody talks about this: when you're the AI person on your team, you're quietly doing unpaid training work. Here's how to get credit for it.",
+    body: "Start a running doc: 'AI workflows I've built/taught.' Every week, add one entry. Include: what you built, who uses it now, hours saved per week. By review time you have a portfolio. This is how AI fluency turns into promotion, not just usefulness.",
+    cta: "Steal this template. DM me if you want the doc I use." },
+  { platform: 'instagram', stage: 3, stageName: 'Emerging',
+    hook: "Going from 'good at AI' to 'leader in AI' is about one thing: you stop being impressed by outputs and start obsessing over repeatability.",
+    body: "Anyone can get one great result. Leaders build systems where great results happen consistently — even on a bad day, even from a new team member. That's the work. That's the leverage.",
+    cta: "The Ritual in bio tells you if you're still in the output-chasing phase or ready for systems." },
+  { platform: 'linkedin', stage: 3, stageName: 'Emerging',
+    hook: "Unpopular take: 'prompt engineering' as a skill is already fading. What's replacing it is more valuable and harder to hire for.",
+    body: "The durable skill is WORKFLOW ARCHITECTURE — knowing which AI tools to chain, in what order, for which outputs. That's not something bootcamps teach. It's earned through months of trial and error, taste, and business context. If you have it, you're early. If you don't yet, that's next quarter's project.",
+    cta: "What's one AI workflow you've stitched together that saves you real time?" },
+
+  // STAGE 4 — FLUENT
+  { platform: 'tiktok', stage: 4, stageName: 'Fluent',
+    hook: "If you're AI-fluent and still working for a company that doesn't leverage it, you have three options — and one of them is the right one.",
+    body: "(1) Stay and slowly watch your skills become invisible. (2) Push upward and try to drag them along. (3) Build something outside that uses what you actually know. The right one depends on your risk tolerance. For me, it's #3. Corporate Witch is the receipt.",
+    cta: "Following my exit in real time. Come watch." },
+  { platform: 'instagram', stage: 4, stageName: 'Fluent',
+    hook: "The cruel irony of being AI-fluent in corporate: you're the most underutilized asset in the building.",
+    body: "You're doing in 20 minutes what used to take 3 hours. Everyone notices. Nobody compensates you for it. At some point the math stops making sense.",
+    cta: "If you're here, you already know. DM me 'exit' if you want to talk real strategy." },
+  { platform: 'linkedin', stage: 4, stageName: 'Fluent',
+    hook: "If you're fully AI-fluent, the question isn't whether you're ahead. It's whether you're compensated like it.",
+    body: "I had this wake-up moment recently. I was delivering work that used to take 3 people a week. I was still on one salary. The delta between value created and value captured is where a lot of mid-career pros are quietly sitting right now — doing the math, wondering if it's time to build something of their own. If that's you, you're not alone. And you're not crazy.",
+    cta: "What's keeping you on the inside right now — and what would it take to tip you outside?" },
+  { platform: 'tiktok', stage: 4, stageName: 'Fluent',
+    hook: "When you realize your AI fluency is a business asset, not a résumé bullet, everything changes.",
+    body: "People pay for custom workflows. They pay for SOPs. They pay for training. Your 6-month head start over peers is a product. The question is whether you package it or keep giving it away at work for free.",
+    cta: "Starting to build the package in public. Stick around." },
+  { platform: 'instagram', stage: 4, stageName: 'Fluent',
+    hook: "To the AI-fluent veterans reading this: you're a founder. You just haven't told anyone yet.",
+    body: "Everything you've learned on nights and weekends — every prompt template, every workflow, every tool decision — is IP. The jump to 'I can sell this' is smaller than you think. The only thing stopping most of us is the habit of being employees.",
+    cta: "DM me 'founder' if you want to compare notes. I'm in the middle of the jump myself." },
+  { platform: 'linkedin', stage: 4, stageName: 'Fluent',
+    hook: "Three signs you've outgrown your AI role at your company: (1) you're fielding the same questions for the 50th time. (2) your workflows are better than your department's official tools. (3) nobody's asking about compensation changes.",
+    body: "When all three are true, you're in the window I call 'peak leverage, shrinking runway.' Your skills have never been more valuable. The company has never been slower to recognize it. That gap is where side projects and consultancies are born.",
+    cta: "How many of the three are true for you right now?" }
+];
+
+let activeFilters = { platform: 'all', stage: 'all' };
+
+function platformEmoji(p) {
+  return p === 'tiktok' ? '📱' : p === 'instagram' ? '📸' : p === 'linkedin' ? '💼' : '';
+}
+
+function renderHooks() {
+  const grid = document.getElementById('hooksGrid');
+  const filtered = hooks.filter(h => {
+    if (activeFilters.platform !== 'all' && h.platform !== activeFilters.platform) return false;
+    if (activeFilters.stage !== 'all' && String(h.stage) !== activeFilters.stage) return false;
+    return true;
+  });
+
+  document.getElementById('filteredCount').textContent = filtered.length;
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state">No hooks match these filters. Try broadening.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((h) => `
+    <div class="hook-card">
+      <button class="hook-copy-btn" onclick="copyHook(${hooks.indexOf(h)}, this)">Copy</button>
+      <div class="hook-meta">
+        <span class="hook-platform">${platformEmoji(h.platform)} ${h.platform.toUpperCase()}</span>
+        <span class="hook-stage">Stage ${h.stage} · ${h.stageName}</span>
+      </div>
+      <p class="hook-text">${h.hook}</p>
+      <p class="hook-body">${h.body}</p>
+      <p class="hook-cta">CTA: ${h.cta}</p>
+    </div>
+  `).join('');
+}
+
+function applyFilter(btn) {
+  const type = btn.dataset.filterType;
+  const val = btn.dataset.filterVal;
+  activeFilters[type] = val;
+  document.querySelectorAll(`[data-filter-type="${type}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderHooks();
+}
+
+function copyHook(idx, btn) {
+  const h = hooks[idx];
+  const text = `HOOK: ${h.hook}\n\nBODY: ${h.body}\n\nCTA: ${h.cta}`;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+document.getElementById('totalCount').textContent = hooks.length;
+renderHooks();
+</script>
+</body>
+</html>

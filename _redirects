@@ -1,0 +1,11 @@
+# Netlify redirects — clean URLs so visitors can type /ritual instead of /ritual/index.html
+
+/ritual     /ritual/index.html      200
+/grimoire   /grimoire/index.html    200
+/spell-bank     /404    404!
+/spell-bank/*   /404    404!
+
+# Old URL protection — catch anything legacy
+/home       /                       301
+/start      /ritual/                301
+/coven      /#coven                 301

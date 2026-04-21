@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Starter Grimoire — Corporate Witch</title>
+<meta name="description" content="The AI cheat sheet for corporate professionals. 5 tools, 3 prompt formulas, a safety card, and a decision tree. Free forever.">
+<meta name="theme-color" content="#080608">
+
+<meta property="og:title" content="The Starter Grimoire — Corporate Witch">
+<meta property="og:description" content="The AI cheat sheet for corporate professionals. Free forever.">
+<meta property="og:type" content="website">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --magenta: #c0186c;
+    --magenta-bright: #e91e8c;
+    --magenta-glow: #ff2d9b;
+    --dark: #080608;
+    --dark-2: #0f0a0e;
+    --dark-3: #1a0f18;
+    --text: #f0e6ee;
+    --text-dim: #9a7a94;
+    --text-faint: #5a3a54;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Noise texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* HEADER */
+  .grim-header {
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    background: linear-gradient(180deg, var(--dark-2) 0%, var(--dark) 100%);
+    border-bottom: 1px solid rgba(192,24,108,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .grim-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(192,24,108,0.22) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .back-link:hover { color: var(--magenta-bright); }
+
+  .grim-sigil {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    animation: sigil-pulse 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 25px var(--magenta));
+    position: relative;
+  }
+
+  @keyframes sigil-pulse {
+    0%, 100% { filter: drop-shadow(0 0 18px var(--magenta)); transform: scale(1) rotate(0deg); }
+    50% { filter: drop-shadow(0 0 40px var(--magenta-glow)); transform: scale(1.08) rotate(8deg); }
+  }
+
+  .eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+
+  .grim-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 0.8rem;
+    position: relative;
+  }
+
+  .grim-title span {
+    color: var(--magenta-bright);
+    text-shadow: 0 0 40px rgba(233,30,140,0.6);
+  }
+
+  .grim-sub {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  .grim-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+
+  .grim-meta span {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .grim-meta span::before {
+    content: '✦';
+    color: var(--magenta);
+  }
+
+  .grim-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 2rem auto 0;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-bright));
+    color: white;
+    box-shadow: 0 0 30px rgba(192,24,108,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(233,30,140,0.5);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(192,24,108,0.5);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--magenta-bright);
+    background: rgba(192,24,108,0.08);
+    color: var(--magenta-bright);
+  }
+
+  /* BODY */
+  .grim-body {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  .grim-section { margin-bottom: 4rem; }
+
+  .grim-section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(192,24,108,0.2);
+  }
+
+  .grim-section-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: var(--magenta);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .grim-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .grim-section-tag {
+    margin-left: auto;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .section-intro {
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  /* TOOLS */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tool-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(192,24,108,0.15);
+    padding: 1.8rem;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .tool-card:hover {
+    border-color: rgba(233,30,140,0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(192,24,108,0.15);
+  }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 40px;
+    background: var(--magenta-bright);
+  }
+
+  .tool-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .tool-icon {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 10px rgba(233,30,140,0.4));
+  }
+
+  .tool-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .tool-best {
+    font-size: 0.9rem;
+    color: var(--magenta-bright);
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+  }
+
+  .tool-use {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .tool-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding-top: 0.8rem;
+    border-top: 1px dashed rgba(192,24,108,0.15);
+  }
+
+  /* FORMULAS */
+  .formula-list { display: grid; gap: 1.5rem; }
+
+  .formula-card {
+    background: var(--dark-2);
+    border-left: 3px solid var(--magenta-bright);
+    padding: 1.8rem;
+  }
+
+  .formula-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .formula-use {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .formula-template {
+    background: var(--dark);
+    padding: 1.2rem;
+    border: 1px solid rgba(192,24,108,0.15);
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    white-space: pre-wrap;
+  }
+
+  .formula-template .placeholder {
+    color: var(--magenta-bright);
+    background: rgba(233,30,140,0.12);
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+  }
+
+  .formula-example {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    padding: 0.8rem 1rem;
+    background: rgba(68,221,136,0.05);
+    border-left: 2px solid #44dd88;
+  }
+
+  .formula-example strong { color: #88ffaa; font-weight: 600; }
+
+  /* SAFETY */
+  .safety-card {
+    background: linear-gradient(135deg, rgba(255,68,68,0.05), var(--dark-2));
+    border: 1px solid rgba(255,68,68,0.2);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .safety-card::before {
+    content: '⚠';
+    position: absolute;
+    top: -0.5rem;
+    left: 1.5rem;
+    background: var(--dark);
+    padding: 0 0.5rem;
+    font-size: 1.5rem;
+    color: #ff8c00;
+  }
+
+  .safety-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 700px) {
+    .safety-list { grid-template-columns: 1fr; }
+  }
+
+  .safety-col h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .safety-col.never h4 { color: #ff6666; }
+  .safety-col.always h4 { color: #88ffaa; }
+
+  .safety-col ul { list-style: none; }
+
+  .safety-col li {
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(192,24,108,0.08);
+  }
+
+  .safety-col li:last-child { border-bottom: none; }
+
+  .safety-col.never li::before { content: '×'; color: #ff6666; font-weight: 700; flex-shrink: 0; }
+  .safety-col.always li::before { content: '✓'; color: #44dd88; font-weight: 700; flex-shrink: 0; }
+
+  /* TREE */
+  .tree-intro {
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    max-width: 700px;
+  }
+
+  .tree-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .tree-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(192,24,108,0.15);
+    padding: 1.3rem;
+    transition: all 0.3s;
+  }
+
+  .tree-card:hover {
+    border-color: rgba(233,30,140,0.4);
+    background: rgba(192,24,108,0.04);
+  }
+
+  .tree-need {
+    font-size: 0.75rem;
+    color: var(--magenta);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .tree-action {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 0.6rem;
+  }
+
+  .tree-action strong { color: var(--magenta-bright); }
+
+  .tree-why {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* COVEN CTA */
+  .coven-invite {
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, var(--dark-2), var(--dark-3));
+    border: 1px solid rgba(192,24,108,0.3);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .coven-invite::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(192,24,108,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .coven-invite-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .coven-invite-copy {
+    font-size: 1rem;
+    color: var(--text-dim);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 450px;
+    margin: 0 auto 0.8rem;
+    position: relative;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { flex-direction: column; }
+  }
+
+  .email-input {
+    flex: 1;
+    padding: 1.1rem 1.3rem;
+    background: var(--dark);
+    border: 1px solid rgba(192,24,108,0.3);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .email-input:focus {
+    border-color: var(--magenta-bright);
+    box-shadow: 0 0 0 2px rgba(233,30,140,0.15);
+  }
+
+  .email-submit {
+    padding: 1.1rem 1.8rem;
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-bright));
+    color: white;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .email-submit:hover {
+    box-shadow: 0 0 30px rgba(233,30,140,0.5);
+  }
+
+  .email-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .form-fine {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    text-align: center;
+    margin-top: 0.5rem;
+    position: relative;
+  }
+
+  .success-msg {
+    display: none;
+    padding: 1.5rem;
+    background: rgba(68,221,136,0.08);
+    border: 1px solid rgba(68,221,136,0.3);
+    color: #88ffaa;
+    font-size: 0.95rem;
+    text-align: center;
+    margin: 1rem auto;
+    max-width: 450px;
+  }
+
+  .error-msg {
+    display: none;
+    padding: 1rem;
+    background: rgba(255,68,68,0.08);
+    border: 1px solid rgba(255,68,68,0.3);
+    color: #ff8888;
+    font-size: 0.85rem;
+    text-align: center;
+    margin: 1rem auto;
+    max-width: 450px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(192,24,108,0.1);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  footer span { color: var(--magenta); }
+
+  .footer-links {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--magenta-bright); }
+
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Print-optimized */
+  @media print {
+    body { background: white !important; color: black !important; }
+    body::before { display: none !important; }
+    .grim-actions, .coven-invite, footer { display: none !important; }
+    .tool-card, .formula-card, .safety-card, .tree-card {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      background: white !important;
+      border: 1px solid #ccc !important;
+      color: black !important;
+    }
+    .grim-title, .grim-section-title, .tool-name, .formula-name, .tree-action { color: black !important; }
+    .grim-title span, .formula-name, .tool-best, .tree-action strong { color: #c0186c !important; }
+    .tool-use, .tree-why, .formula-use, .grim-sub, .grim-section-tag, .tool-meta, .safety-col li { color: #555 !important; }
+    .formula-template { background: #f5f5f5 !important; color: black !important; border-color: #ddd !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="grim-header">
+  <a href="../index.html" class="back-link">← Corporate Witch</a>
+  <div class="grim-sigil">✦</div>
+  <p class="eyebrow">The Coven's Desk Reference · v1</p>
+  <h1 class="grim-title">The Starter <span>Grimoire</span></h1>
+  <p class="grim-sub">Every tool, formula, and safety rule we wish someone had handed us on day one. Screenshot it. Print it. Share it with your weird coworker who gets it.</p>
+
+  <div class="grim-meta">
+    <span>9 Tools</span>
+    <span>3 Prompt Formulas</span>
+    <span>Safety Card</span>
+    <span>Decision Tree</span>
+  </div>
+
+  <div class="grim-actions">
+    <a href="#coven-invite" class="btn btn-primary">Join The Coven ✦</a>
+  </div>
+</header>
+
+<main class="grim-body">
+
+  <!-- SECTION I: THE 9 TOOLS -->
+  <section class="grim-section reveal">
+    <div class="grim-section-head">
+      <span class="grim-section-num">I</span>
+      <h2 class="grim-section-title">The Nine Tools Every Corporate Witch Needs</h2>
+    </div>
+    <p class="section-intro">Not 50. Not 20. Nine. Each one earns its place by doing something the others can't. Master the stack and you'll outperform 90% of your peers who are "trying everything."</p>
+
+    <div class="tools-grid">
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">🔮</span><h3 class="tool-name">Claude</h3></div>
+        <p class="tool-best">Best for: Long-form writing, analysis, spreadsheets</p>
+        <p class="tool-use">Handles big documents, nuanced tone, and long context better than anyone. Upload a 50-page report and ask real questions. Your writing partner and research librarian.</p>
+        <div class="tool-meta"><span>Free Tier</span><span>Anthropic</span></div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">⚡</span><h3 class="tool-name">ChatGPT</h3></div>
+        <p class="tool-best">Best for: Versatile daily workhorse, image generation</p>
+        <p class="tool-use">The Swiss Army knife. Good at almost everything, great at very few things. Plus tier ($20/mo) unlocks image generation and data tools. Most people's first tool for a reason.</p>
+        <div class="tool-meta"><span>Free Tier</span><span>OpenAI</span></div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">🔍</span><h3 class="tool-name">Perplexity</h3></div>
+        <p class="tool-best">Best for: Research with actual sources</p>
+        <p class="tool-use">What Google was supposed to be. Every answer comes with citations. Use it for industry research, competitive intel, or anything where "where did you get that?" matters.</p>
+        <div class="tool-meta"><span>Free Tier</span><span>Perplexity AI</span></div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">🌙</span><h3 class="tool-name">Kimi</h3></div>
+        <p class="tool-best">Best for: Massive documents (2M+ tokens), free long-context work</p>
+        <p class="tool-use">The sleeper hit. When you need to feed an entire book, year of emails, or giant codebase into a single prompt without paying premium — Kimi's free context window dwarfs what Claude and ChatGPT paywall. A quiet unfair advantage.</p>
+        <div class="tool-meta"><span>Free Tier</span><span>Moonshot AI</span></div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">💎</span><h3 class="tool-name">Gemini</h3></div>
+        <p class="tool-best">Best for: Google Workspace integration (Docs, Sheets, Gmail, Drive)</p>
+        <p class="tool-use">If your company runs on Google, Gemini lives inside your tools. Draft in Docs, analyze in Sheets, summarize Gmail threads — no copy-paste dance. Plus a free tier that competes head-to-head with ChatGPT Plus features.</p>
+        <div class="tool-meta"><span>Free Tier</span><span>Google</span></div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">📻</span><h3 class="tool-name">NotebookLM</h3></div>
+        <p class="tool-best">Best for: Turning any document into a podcast-style audio brief</p>
+        <p class="tool-use">Upload your reading stack — PDFs, articles, meeting notes — and NotebookLM generates a two-host podcast discussing it. Listen on your commute instead of staring at a 40-page report. Disgustingly good for busy weeks.</p>
+        <div class="tool-meta"><span>Free Tier</span><span>Google</span></div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">🎙</span><h3 class="tool-name">Otter.ai</h3></div>
+        <p class="tool-best">Best for: Meeting notes, transcripts, action items</p>
+        <p class="tool-use">Transcribes meetings automatically, generates summaries, extracts action items. Works on Zoom, Teams, Google Meet. 300 min/month free. Silent, tireless intern.</p>
+        <div class="tool-meta"><span>Free Tier</span><span>Otter.ai</span></div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">🎨</span><h3 class="tool-name">Canva + Gamma</h3></div>
+        <p class="tool-best">Best for: Decks, visuals, social content</p>
+        <p class="tool-use">Canva AI generates designs. Gamma generates whole presentations from a paragraph. Together they turn "blank deck panic" into "first draft in 15 minutes."</p>
+        <div class="tool-meta"><span>Free Tier</span><span>Canva / Gamma</span></div>
+      </div>
+
+      <div class="tool-card reveal">
+        <div class="tool-header"><span class="tool-icon">🎬</span><h3 class="tool-name">Descript</h3></div>
+        <p class="tool-best">Best for: Video + podcast editing by editing the transcript</p>
+        <p class="tool-use">Edit video and audio like a Word doc. Delete a sentence from the text, the video cut happens automatically. Remove ums, fix flubs, even change your words using voice cloning. The tool that turned "I'll start a podcast someday" into "I recorded one this weekend."</p>
+        <div class="tool-meta"><span>Free Tier</span><span>Descript</span></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION II: FORMULAS -->
+  <section class="grim-section reveal">
+    <div class="grim-section-head">
+      <span class="grim-section-num">II</span>
+      <h2 class="grim-section-title">The Three Prompt Formulas That Do 80% of the Work</h2>
+      <span class="grim-section-tag">Copy · Paste · Adapt</span>
+    </div>
+    <p class="section-intro">Bad prompts = garbage answers. These three patterns cover most corporate tasks. Memorize them. Replace the brackets. Watch everything change.</p>
+
+    <div class="formula-list">
+      <div class="formula-card reveal">
+        <h3 class="formula-name">1 · The R-T-F Formula (Role / Task / Format)</h3>
+        <p class="formula-use">Use when: You need structured output. Reports, summaries, emails, analyses.</p>
+        <div class="formula-template">Act as a <span class="placeholder">[ROLE]</span>.
+
+Your task is to <span class="placeholder">[TASK]</span>.
+
+Format the response as <span class="placeholder">[FORMAT]</span>.</div>
+        <p class="formula-example"><strong>Real example:</strong> "Act as a senior product marketing manager. Your task is to summarize this competitor's pricing page and flag 3 differences from our pricing. Format as a bulleted list with the one-line takeaway at the top."</p>
+      </div>
+
+      <div class="formula-card reveal">
+        <h3 class="formula-name">2 · The Context-Constraint Formula</h3>
+        <p class="formula-use">Use when: The default AI answer is too generic. You need it tuned to your situation.</p>
+        <div class="formula-template">Here is the context: <span class="placeholder">[SITUATION / AUDIENCE / HISTORY]</span>
+
+Here are my constraints: <span class="placeholder">[TIME, TONE, WHAT TO AVOID]</span>
+
+Now do this: <span class="placeholder">[THE ASK]</span></div>
+        <p class="formula-example"><strong>Real example:</strong> "Here is the context: I'm a VP presenting Q3 numbers to a skeptical board that has seen 4 bad quarters. Constraints: 3 slides max, no fluff, tone: confident but not defensive. Now do this: outline what each slide says."</p>
+      </div>
+
+      <div class="formula-card reveal">
+        <h3 class="formula-name">3 · The Critique-Then-Improve Formula</h3>
+        <p class="formula-use">Use when: You already wrote something and want it sharper. This is the secret weapon.</p>
+        <div class="formula-template">Here is my draft: <span class="placeholder">[YOUR TEXT]</span>
+
+Critique it honestly. What is weak? What is missing? What would a sharp editor cut?
+
+Then rewrite it using your critique.</div>
+        <p class="formula-example"><strong>Real example:</strong> Paste your email. Ask this exact prompt. Most AIs will give you back a version that's 30% shorter and 2x clearer. The word "honestly" is the magic — without it you get polite feedback.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION III: SAFETY -->
+  <section class="grim-section reveal">
+    <div class="grim-section-head">
+      <span class="grim-section-num">III</span>
+      <h2 class="grim-section-title">The Safety Card (Read Before You Paste Anything)</h2>
+      <span class="grim-section-tag">Don't Skip This</span>
+    </div>
+
+    <div class="safety-card reveal">
+      <p class="section-intro">Most AI disasters happen in the first two weeks of usage because nobody taught these rules. They take 60 seconds to read and will save your job.</p>
+
+      <div class="safety-list">
+        <div class="safety-col never">
+          <h4>NEVER paste into any AI tool:</h4>
+          <ul>
+            <li>Customer names, emails, phone numbers, or addresses</li>
+            <li>Social security numbers, credit card numbers, bank info</li>
+            <li>Medical records, patient info, or HIPAA-protected data</li>
+            <li>Internal source code, proprietary algorithms, or trade secrets</li>
+            <li>Salary information tied to named employees</li>
+            <li>Anything marked "Confidential," "Internal Use Only," or NDA-covered</li>
+            <li>Client contracts, legal documents in progress</li>
+          </ul>
+        </div>
+        <div class="safety-col always">
+          <h4>ALWAYS do this instead:</h4>
+          <ul>
+            <li>Anonymize — replace names with Role 1, Role 2, Client A, Client B</li>
+            <li>Strip identifying numbers — "a large medical center" not the actual name</li>
+            <li>Use enterprise AI if available (Copilot, ChatGPT Enterprise)</li>
+            <li>Check your company's AI policy — it exists, it may surprise you</li>
+            <li>Assume everything you paste may be used for training (act accordingly)</li>
+            <li>When in doubt, ask AI to help write a fictional analogous case</li>
+            <li>Keep a personal "safe prompt" notebook for patterns you reuse</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION IV: DECISION TREE -->
+  <section class="grim-section reveal">
+    <div class="grim-section-head">
+      <span class="grim-section-num">IV</span>
+      <h2 class="grim-section-title">The Decision Tree — Which Tool for Which Job</h2>
+      <span class="grim-section-tag">Quick Reference</span>
+    </div>
+    <p class="tree-intro">The biggest mistake novices make is using one tool for everything. Each task has a best fit. Here's the cheat sheet:</p>
+
+    <div class="tree-grid">
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Write a long, nuanced document → <strong>Claude</strong></p>
+        <p class="tree-why">Best at long context, tone control, and doesn't truncate on you.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Research something new → <strong>Perplexity</strong></p>
+        <p class="tree-why">You need citations and current info, not AI memory from 2023.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Brainstorm 20 ideas fast → <strong>ChatGPT</strong></p>
+        <p class="tree-why">Fast, chatty, good at divergent thinking. First-draft partner.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Make a deck → <strong>Gamma</strong></p>
+        <p class="tree-why">Paragraph in, deck out. Then polish the 3 slides that matter.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Summarize a meeting → <strong>Otter.ai</strong></p>
+        <p class="tree-why">Runs in background. Summarizes + action items automatically.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Generate an image → <strong>ChatGPT / Canva AI</strong></p>
+        <p class="tree-why">ChatGPT for quick one-offs, Canva for editable designs.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Analyze a spreadsheet → <strong>Claude</strong></p>
+        <p class="tree-why">Upload the file. Ask real questions. Best at "what does this data mean?"</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Rewrite / improve something → <strong>Claude or ChatGPT</strong></p>
+        <p class="tree-why">Both work. Claude more restrained, ChatGPT more playful.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Learn a new concept fast → <strong>Claude + Perplexity</strong></p>
+        <p class="tree-why">Claude explains. Perplexity verifies. Belt and suspenders.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Feed a huge document (200+ pages) → <strong>Kimi</strong></p>
+        <p class="tree-why">Free massive context window. No "document too long" errors.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Work inside Google Docs / Sheets / Gmail → <strong>Gemini</strong></p>
+        <p class="tree-why">Lives inside the Google tools you already use. No copy-paste dance.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Digest reading during my commute → <strong>NotebookLM</strong></p>
+        <p class="tree-why">Upload docs, get a podcast. Two AI hosts discuss it for you.</p>
+      </div>
+      <div class="tree-card reveal">
+        <p class="tree-need">I need to</p>
+        <p class="tree-action">Edit a video or podcast fast → <strong>Descript</strong></p>
+        <p class="tree-why">Edit by editing the transcript. No timeline scrubbing ever again.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COVEN INVITE -->
+  <section class="coven-invite reveal" id="coven-invite">
+    <h3 class="coven-invite-title">Want the weekly updates to this Grimoire?</h3>
+    <p class="coven-invite-copy">
+      Every Sunday: one new tool, one new formula, or one new workflow — updated as AI shifts. No fluff. No salesmanship. Unsubscribe whenever your inbox says so.
+    </p>
+    <div class="form-row">
+      <input type="email" class="email-input" id="covenEmailInput" placeholder="your@email.com">
+      <button class="email-submit" onclick="joinCoven()" id="covenJoinBtn">Join The Coven ✦</button>
+    </div>
+    <p class="form-fine">No spam. No algorithms. Just spells.</p>
+    <div class="success-msg" id="covenSuccess">✦ Welcome to The Coven, bestie. Check your inbox. ✦</div>
+    <div class="error-msg" id="covenError"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../ritual/index.html">The Ritual</a>
+    <a href="index.html">The Grimoire</a>
+  </div>
+  <p>© 2026 <span>Corporate Witch</span> — A Rebel Herd Media Property</p>
+</footer>
+
+<script>
+window.CW_CONFIG = {
+  BEEHIIV_PUB_ID: '9f059c58-427b-4fd3-8546-a60d33fb3a66',
+  BEEHIIV_FORM_URL: 'https://subscribe-forms.beehiiv.com/9f059c58-427b-4fd3-8546-a60d33fb3a66'
+};
+
+(function() {
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+})();
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email || '').trim());
+}
+
+function getUTMs() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    utm_source: p.get('utm_source') || '',
+    utm_medium: p.get('utm_medium') || '',
+    utm_campaign: p.get('utm_campaign') || 'grimoire_coven_join',
+    referring_site: document.referrer || ''
+  };
+}
+
+async function joinCoven() {
+  const input = document.getElementById('covenEmailInput');
+  const btn = document.getElementById('covenJoinBtn');
+  const successEl = document.getElementById('covenSuccess');
+  const errorEl = document.getElementById('covenError');
+  const email = (input.value || '').trim();
+
+  errorEl.style.display = 'none';
+
+  if (!isValidEmail(email)) {
+    errorEl.textContent = 'Please enter a valid email address.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Casting...';
+
+  let ok = true;
+  try {
+    if (CW_CONFIG.BEEHIIV_PUB_ID === 'REPLACE_WITH_PUB_ID') {
+      console.warn('[CW] beehiiv not configured — simulating. See README.md');
+      await new Promise(r => setTimeout(r, 600));
+    } else {
+      const formData = new FormData();
+      formData.append('email', email);
+      const metadata = getUTMs();
+      Object.entries(metadata).forEach(([k, v]) => { if (v) formData.append(k, v); });
+      await fetch(CW_CONFIG.BEEHIIV_FORM_URL, {
+        method: 'POST', body: formData, mode: 'no-cors'
+      });
+    }
+  } catch (err) {
+    console.error('[CW] Subscribe error:', err);
+    ok = false;
+  }
+
+  if (!ok) {
+    btn.disabled = false;
+    btn.textContent = 'Join The Coven ✦';
+    errorEl.textContent = 'Something went sideways. Try again.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  document.querySelector('.form-row').style.display = 'none';
+  document.querySelector('.form-fine').style.display = 'none';
+  successEl.style.display = 'block';
+}
+
+document.getElementById('covenEmailInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') joinCoven();
+});
+</script>
+<script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
+</body>
+</html>

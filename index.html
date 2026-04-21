@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporate Witch — The Spells They Don't Teach You</title>
+<meta name="description" content="AI fluency for mid-to-late career professionals. Take the 3-minute AI Readiness Ritual. Join The Coven.">
+<meta name="theme-color" content="#080608">
+
+<meta property="og:title" content="Corporate Witch — The Spells They Don't Teach You">
+<meta property="og:description" content="Take the 3-minute AI Readiness Ritual. Know where you stand. Cast your first spell this afternoon.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://corporatewitch.media">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --magenta: #c0186c;
+    --magenta-bright: #e91e8c;
+    --magenta-glow: #ff2d9b;
+    --magenta-deep: #8a0f4d;
+    --dark: #080608;
+    --dark-2: #0f0a0e;
+    --dark-3: #1a0f18;
+    --smoke: #2a1a27;
+    --text: #f0e6ee;
+    --text-dim: #9a7a94;
+    --text-faint: #5a3a54;
+    --gold: #c9a84c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--dark);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 2rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(192,24,108,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 20% 100%, rgba(192,24,108,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(192,24,108,0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* FLOATING PARTICLES — more of them, more visible for TikTok flash */
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--magenta-bright);
+    border-radius: 50%;
+    animation: float linear infinite;
+    opacity: 0;
+    box-shadow: 0 0 6px var(--magenta-glow);
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.7; }
+    100% { transform: translateY(-10vh) translateX(30px); opacity: 0; }
+  }
+
+  .particle:nth-child(1)  { left: 8%;  animation-duration: 8s;  animation-delay: 0s;   width: 3px; height: 3px; }
+  .particle:nth-child(2)  { left: 18%; animation-duration: 12s; animation-delay: 2s; }
+  .particle:nth-child(3)  { left: 28%; animation-duration: 9s;  animation-delay: 4s;   width: 3px; height: 3px; }
+  .particle:nth-child(4)  { left: 38%; animation-duration: 11s; animation-delay: 1s; }
+  .particle:nth-child(5)  { left: 48%; animation-duration: 10s; animation-delay: 3s;   width: 4px; height: 4px; }
+  .particle:nth-child(6)  { left: 58%; animation-duration: 13s; animation-delay: 5s; }
+  .particle:nth-child(7)  { left: 68%; animation-duration: 7s;  animation-delay: 6s; }
+  .particle:nth-child(8)  { left: 78%; animation-duration: 14s; animation-delay: 0.5s; width: 3px; height: 3px; }
+  .particle:nth-child(9)  { left: 88%; animation-duration: 10s; animation-delay: 2.5s; }
+  .particle:nth-child(10) { left: 14%; animation-duration: 11s; animation-delay: 7s;   width: 3px; height: 3px; }
+  .particle:nth-child(11) { left: 52%; animation-duration: 9s;  animation-delay: 1.5s; }
+  .particle:nth-child(12) { left: 82%; animation-duration: 8s;  animation-delay: 4.5s; width: 4px; height: 4px; }
+
+  /* SIGIL — restored + amplified */
+  .sigil {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    animation: pulse-glow 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 25px var(--magenta));
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { filter: drop-shadow(0 0 18px var(--magenta)); transform: scale(1) rotate(0deg); }
+    50% { filter: drop-shadow(0 0 40px var(--magenta-glow)); transform: scale(1.08) rotate(10deg); }
+  }
+
+  /* EYEBROW */
+  .eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    margin-bottom: 1.2rem;
+    animation: fadeInUp 0.8s ease both;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* HERO TITLE */
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+    animation: fadeInUp 0.9s ease 0.1s both;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-title .line-1 { color: var(--text); }
+  .hero-title .line-2 {
+    color: var(--magenta-bright);
+    text-shadow: 0 0 50px rgba(233,30,140,0.7), 0 0 20px rgba(233,30,140,0.4);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s ease 0.2s both;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* MAGIC DIVIDER */
+  .magic-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 500px;
+    animation: fadeInUp 1s ease 0.3s both;
+    position: relative;
+    z-index: 2;
+  }
+
+  .magic-divider::before,
+  .magic-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+  }
+
+  .magic-divider span {
+    color: var(--magenta);
+    font-size: 1.2rem;
+  }
+
+  /* HERO COPY */
+  .hero-copy {
+    font-size: clamp(1rem, 2.3vw, 1.2rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto 2rem;
+    animation: fadeInUp 1s ease 0.4s both;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-copy strong {
+    color: var(--magenta-bright);
+    font-weight: 600;
+  }
+
+  /* CTA */
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease 0.5s both;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-primary {
+    display: inline-block;
+    padding: 1.1rem 2.8rem;
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-bright));
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 35px rgba(192,24,108,0.4);
+  }
+
+  .cta-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--magenta-bright), var(--magenta-glow));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 55px rgba(233,30,140,0.6);
+  }
+
+  .cta-primary:hover::before { opacity: 1; }
+  .cta-primary span { position: relative; z-index: 1; }
+
+  .cta-ghost {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: transparent;
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(192,24,108,0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cta-ghost:hover {
+    border-color: var(--magenta-bright);
+    background: rgba(192,24,108,0.1);
+    color: var(--magenta-bright);
+  }
+
+  /* SCROLL HINT */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: fadeInUp 1s ease 1s both;
+    z-index: 2;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--magenta), transparent);
+    animation: scroll-line 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-line {
+    0%, 100% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .container-narrow {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* QUOTE BLOCK */
+  .quote-block {
+    margin: 4rem auto;
+    max-width: 700px;
+    text-align: center;
+    padding: 3rem 2rem;
+    position: relative;
+  }
+
+  .quote-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(192,24,108,0.2);
+    clip-path: polygon(20px 0%, 100% 0%, calc(100% - 20px) 100%, 0% 100%);
+  }
+
+  .quote-text {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text);
+    font-style: italic;
+  }
+
+  .quote-text em {
+    color: var(--magenta-bright);
+    font-style: normal;
+  }
+
+  .quote-attr {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* SECTION BASICS */
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 5rem 2rem;
+    background: var(--dark-2);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .about-text p {
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .about-text .highlight {
+    color: var(--magenta-bright);
+    font-weight: 600;
+  }
+
+  .career-path {
+    background: var(--dark-3);
+    padding: 1.5rem;
+    border: 1px solid rgba(192,24,108,0.15);
+  }
+
+  .career-item {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.4rem;
+    border-left: 2px solid rgba(192,24,108,0.3);
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+  }
+
+  .career-item:hover {
+    border-left-color: var(--magenta-bright);
+    color: var(--text);
+    background: rgba(192,24,108,0.05);
+  }
+
+  .career-item .arrow {
+    color: var(--magenta);
+    margin-right: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  /* THREE PATHS (moved after story) */
+  .paths {
+    padding: 5rem 2rem 3rem;
+  }
+
+  .paths-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 900px) {
+    .paths-grid { grid-template-columns: 1fr; }
+  }
+
+  .path-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(192,24,108,0.2);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .path-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--magenta), var(--magenta-bright));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .path-card:hover {
+    border-color: rgba(233,30,140,0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(192,24,108,0.2);
+  }
+
+  .path-card:hover::before { transform: scaleX(1); }
+
+  .path-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+    filter: drop-shadow(0 0 15px rgba(233,30,140,0.4));
+  }
+
+  .path-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 0.8rem;
+  }
+
+  .path-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .path-desc {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+
+  .path-cta {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--magenta-bright);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+
+  .path-card.recommended {
+    border-color: rgba(233,30,140,0.4);
+    box-shadow: 0 0 40px rgba(192,24,108,0.12);
+  }
+
+  .path-card.recommended::after {
+    content: 'START HERE';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    background: var(--magenta-bright);
+    color: white;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+  }
+
+  /* SPELLBOOK */
+  .spells-section { padding: 5rem 2rem; }
+
+  .spells-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .spell-card {
+    background: var(--dark-2);
+    border: 1px solid rgba(192,24,108,0.15);
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .spell-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(to bottom, var(--magenta-bright), var(--magenta-glow));
+    transition: height 0.4s ease;
+  }
+
+  .spell-card:hover {
+    border-color: rgba(192,24,108,0.35);
+    transform: translateY(-2px);
+  }
+
+  .spell-card:hover::before { height: 100%; }
+
+  .spell-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(233,30,140,0.3));
+  }
+
+  .spell-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+
+  .spell-card p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* WHO IT'S FOR */
+  .who-section {
+    padding: 4rem 2rem;
+    background: var(--dark-2);
+  }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 800px) {
+    .who-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+
+  .who-col h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .who-col.for h3 { color: var(--magenta-bright); }
+  .who-col.not h3 { color: var(--text-dim); }
+
+  .who-list { list-style: none; }
+
+  .who-list li {
+    padding: 0.7rem 0;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(192,24,108,0.08);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .who-col.for .who-list li::before {
+    content: '✦';
+    color: var(--magenta-bright);
+    flex-shrink: 0;
+  }
+
+  .who-col.not .who-list li::before {
+    content: '×';
+    color: var(--text-faint);
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  /* COVEN / EMAIL CAPTURE */
+  .coven {
+    padding: 5rem 2rem;
+    background: linear-gradient(180deg, var(--dark-2) 0%, var(--dark-3) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .coven::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(192,24,108,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .coven-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .coven-copy {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .email-form { max-width: 480px; margin: 0 auto; }
+
+  .form-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .form-row { flex-direction: column; }
+  }
+
+  .email-input {
+    flex: 1;
+    padding: 1.1rem 1.3rem;
+    background: var(--dark);
+    border: 1px solid rgba(192,24,108,0.3);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .email-input:focus {
+    border-color: var(--magenta-bright);
+    box-shadow: 0 0 0 2px rgba(233,30,140,0.15);
+  }
+
+  .email-input::placeholder { color: var(--text-faint); }
+
+  .email-submit {
+    padding: 1.1rem 1.8rem;
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-bright));
+    color: white;
+    border: none;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .email-submit:hover {
+    box-shadow: 0 0 30px rgba(233,30,140,0.5);
+    transform: translateY(-1px);
+  }
+
+  .email-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .form-fine {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-top: 0.8rem;
+  }
+
+  .success-msg {
+    display: none;
+    padding: 1.5rem;
+    background: rgba(68,221,136,0.08);
+    border: 1px solid rgba(68,221,136,0.3);
+    color: #88ffaa;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .error-msg {
+    display: none;
+    padding: 1rem;
+    background: rgba(255,68,68,0.08);
+    border: 1px solid rgba(255,68,68,0.3);
+    color: #ff8888;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .social-strip {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid rgba(192,24,108,0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .social-link:hover {
+    border-color: var(--magenta-bright);
+    color: var(--magenta-bright);
+    box-shadow: 0 0 20px rgba(192,24,108,0.2);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(192,24,108,0.1);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  footer span { color: var(--magenta); }
+
+  .footer-links {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--magenta-bright); }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .text-center { text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="particles">
+    <div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div>
+  </div>
+
+  <div class="sigil">✦</div>
+
+  <p class="eyebrow">AI Fluency for Corporate Professionals</p>
+
+  <h1 class="hero-title">
+    <div class="line-1">Corporate</div>
+    <div class="line-2">Witch</div>
+  </h1>
+
+  <p class="hero-subtitle">The Spells They Don't Teach You</p>
+
+  <div class="magic-divider"><span>✦</span></div>
+
+  <p class="hero-copy">
+    Your company isn't ready for AI.<br>
+    <strong>You should be.</strong><br><br>
+    I've worked more jobs than most people have in a lifetime.<br>
+    Not because I couldn't hold one — because I can't stop leveling up.<br>
+    AI is the next level. Let me show you how to climb.
+  </p>
+
+  <div class="cta-row">
+    <a href="ritual/index.html" class="cta-primary"><span>Take The Ritual →</span></a>
+    <a href="#about" class="cta-ghost">Who Am I?</a>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- QUOTE -->
+<div class="container">
+  <div class="quote-block reveal">
+    <p class="quote-text">"The tools were always there. <em>I just learned the spells.</em>"</p>
+    <p class="quote-attr">— Merry, Corporate Witch</p>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="section-label">Who Is The Witch</p>
+        <h2 class="section-title">I've Held More Roles Than Most People Will in a Lifetime</h2>
+        <p>I'm <strong>Merry</strong>. Anesthesia Tech. Endoscopy Tech. Surgical Coordinator. Fortune 500 Finance. <strong>C-Suite Executive Escalation Squad</strong>. Ecommerce Launch Specialist. Now a Senior Design Engineer.</p>
+        <p>Not because I couldn't sit still. Because I have an <span class="highlight">insatiable desire to level up</span> — and every room I walked into, eventually I outgrew it.</p>
+        <p>Then I started using AI in my current role. <span class="highlight">It didn't just save me time — my numbers got measurably better.</span> That's when I knew this wasn't another tool in the toolbox. It was the toolbox itself, rewired.</p>
+        <p>I had to go deeper. And now I'm going to show you what I found.</p>
+      </div>
+      <div class="career-path reveal">
+        <div class="career-item"><span class="arrow">▶</span> Anesthesia &amp; Endoscopy Tech</div>
+        <div class="career-item"><span class="arrow">▶</span> Surgical Coordinator</div>
+        <div class="career-item"><span class="arrow">▶</span> Fortune 500 Finance</div>
+        <div class="career-item"><span class="arrow">▶</span> C-Suite Executive Escalation Squad</div>
+        <div class="career-item"><span class="arrow">▶</span> Ecommerce Launch Specialist</div>
+        <div class="career-item"><span class="arrow">▶</span> Senior Design Engineer</div>
+        <div class="career-item" style="border-color: var(--magenta-bright); background: rgba(192,24,108,0.12);"><span class="arrow" style="color:var(--magenta-glow);">▶</span> <strong style="color:var(--text);">Corporate Witch — AI Fluency</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE PATHS -->
+<section class="paths" id="paths">
+  <div class="container">
+    <p class="section-label reveal text-center">Three Paths In</p>
+    <h2 class="section-title reveal text-center">Pick Your Starting Ritual</h2>
+
+    <div class="paths-grid">
+      <a href="ritual/index.html" class="path-card recommended reveal">
+        <span class="path-icon">🔮</span>
+        <p class="path-label">Path One · 3 Minutes</p>
+        <h3 class="path-title">The AI Readiness Ritual</h3>
+        <p class="path-desc">8 questions. Brutal honesty. A verdict on where you actually stand — plus one Quick Win you can use this afternoon. No login. No spam. Just a mirror.</p>
+        <span class="path-cta">Begin Ritual →</span>
+      </a>
+
+      <a href="grimoire/index.html" class="path-card reveal">
+        <span class="path-icon">📜</span>
+        <p class="path-label">Path Two · The Starter Kit</p>
+        <h3 class="path-title">The Starter Grimoire</h3>
+        <p class="path-desc">The cheat sheet we wish someone had handed us. Five tools, three prompt formulas, a safety card, and a decision tree. Print it. Pin it.</p>
+        <span class="path-cta">Open The Grimoire →</span>
+      </a>
+
+      <a href="#coven" class="path-card reveal">
+        <span class="path-icon">✦</span>
+        <p class="path-label">Path Three · Weekly</p>
+        <h3 class="path-title">Join The Coven</h3>
+        <p class="path-desc">One tool. One real corporate use case. Zero fluff. The newsletter your company won't send you, delivered weekly to your inbox.</p>
+        <span class="path-cta">Join The Coven →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SPELLBOOK -->
+<section class="spells-section">
+  <div class="container">
+    <p class="section-label reveal text-center">What You'll Learn</p>
+    <h2 class="section-title reveal text-center">The Spellbook</h2>
+
+    <div class="spells-grid">
+      <div class="spell-card reveal">
+        <span class="spell-icon">⚡</span>
+        <h3>The Real Tools</h3>
+        <p>Claude, ChatGPT, Gemini, Kimi, Perplexity, NotebookLM, Canva, Otter, Descript — not theory. Real workflows. Real time saved. Real results you can show your boss on Monday.</p>
+      </div>
+      <div class="spell-card reveal">
+        <span class="spell-icon">🏢</span>
+        <h3>Corporate Autopsy</h3>
+        <p>Why your company is behind, what your IT department isn't telling you, and how to get ahead of the wave before it knocks you down.</p>
+      </div>
+      <div class="spell-card reveal">
+        <span class="spell-icon">🧠</span>
+        <h3>Prompting That Works</h3>
+        <p>You're using AI like a search engine. That's why it's giving you garbage. Learn how to ask so you actually get what you need.</p>
+      </div>
+      <div class="spell-card reveal">
+        <span class="spell-icon">🚀</span>
+        <h3>The Unfair Advantage</h3>
+        <p>Experience + AI = a combination most younger colleagues can't replicate. I'll show you how to make your tenure a superpower, not a liability.</p>
+      </div>
+      <div class="spell-card reveal">
+        <span class="spell-icon">🗺️</span>
+        <h3>Your Exit Strategy</h3>
+        <p>Building income outside corporate using AI tools. I'm doing it in real time and documenting everything. You'll see every move I make.</p>
+      </div>
+      <div class="spell-card reveal">
+        <span class="spell-icon">✦</span>
+        <h3>Weekly Spells</h3>
+        <p>One tool, one use case, one real result — every week. Digestible enough for a lunch break. Powerful enough to change your career.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="who-section">
+  <div class="container-narrow">
+    <p class="section-label reveal text-center">Before You Scroll Further</p>
+    <h2 class="section-title reveal text-center">Is This For You?</h2>
+
+    <div class="who-grid">
+      <div class="who-col for reveal">
+        <h3>You'll fit in here if:</h3>
+        <ul class="who-list">
+          <li>You're mid-to-late career and watching AI reshape your industry in real time</li>
+          <li>Your company talks about AI in meetings but blocks ChatGPT on the VPN</li>
+          <li>You've tried AI, got garbage answers, and quietly wrote it off</li>
+          <li>You're tired of 22-year-old "prompt engineers" telling you how to do your job</li>
+          <li>You want the unfair advantage — not another certificate to frame</li>
+        </ul>
+      </div>
+
+      <div class="who-col not reveal">
+        <h3>You'll hate it here if:</h3>
+        <ul class="who-list">
+          <li>You think AI is a fad and you'll ride out the next 10 years</li>
+          <li>You want theory, research papers, and academic debates</li>
+          <li>You need someone to write your prompts for you forever</li>
+          <li>You're allergic to the word "witch"</li>
+          <li>You think career sovereignty means staying put and hoping</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COVEN / EMAIL CAPTURE -->
+<section class="coven" id="coven">
+  <div class="coven-inner">
+    <p class="section-label reveal">Join The Coven</p>
+    <h2 class="section-title reveal">Get The Weekly Spells</h2>
+    <p class="coven-copy reveal">
+      Every week: one AI tool, one real corporate use case, zero fluff.<br>
+      The newsletter your company won't send you.
+    </p>
+
+    <div class="email-form reveal">
+      <div class="form-row" id="formRow">
+        <input type="email" class="email-input" placeholder="your@email.com" id="emailInput" aria-label="Email address">
+        <button class="email-submit" onclick="handleSubmit()" id="submitBtn">Cast The Spell</button>
+      </div>
+      <p class="form-fine">No spam. No algorithms. Just spells. Unsubscribe anytime.</p>
+      <div class="success-msg" id="successMsg">
+        ✦ Welcome to the Coven. Check your inbox to confirm. ✦
+      </div>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+
+    <div class="social-strip reveal">
+      <a href="https://tiktok.com/@corporatewitch05" class="social-link" target="_blank" rel="noopener">
+        <span>📱</span> TikTok
+      </a>
+      <a href="https://linkedin.com" class="social-link" target="_blank" rel="noopener">
+        <span>💼</span> LinkedIn
+      </a>
+      <a href="https://instagram.com" class="social-link" target="_blank" rel="noopener">
+        <span>📸</span> Instagram
+      </a>
+      <a href="mailto:corporatewitchadmin@gmail.com" class="social-link">
+        <span>✉️</span> Contact
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="ritual/index.html">The Ritual</a>
+    <a href="grimoire/index.html">The Grimoire</a>
+    <a href="#coven">The Coven</a>
+  </div>
+  <p>© 2026 <span>Corporate Witch</span> — A Rebel Herd Media Property</p>
+  <p style="margin-top:0.5rem;">corporatewitch.media</p>
+</footer>
+
+<script>
+/* ===================================================
+   BEEHIIV CONFIG — replace these two values
+   when you set up beehiiv. See README.md
+   =================================================== */
+window.CW_CONFIG = {
+  BEEHIIV_PUB_ID: '9f059c58-427b-4fd3-8546-a60d33fb3a66',
+  BEEHIIV_FORM_URL: 'https://subscribe-forms.beehiiv.com/9f059c58-427b-4fd3-8546-a60d33fb3a66'
+};
+
+/* ===================================================
+   SCROLL REVEAL
+   =================================================== */
+(function() {
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+})();
+
+/* ===================================================
+   EMAIL CAPTURE
+   =================================================== */
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email || '').trim());
+}
+
+function getUTMs() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    utm_source: p.get('utm_source') || '',
+    utm_medium: p.get('utm_medium') || '',
+    utm_campaign: p.get('utm_campaign') || 'landing_coven',
+    referring_site: document.referrer || ''
+  };
+}
+
+async function subscribeEmail(email, metadata) {
+  // If beehiiv isn't configured yet, simulate success for dev/testing
+  if (CW_CONFIG.BEEHIIV_PUB_ID === 'REPLACE_WITH_PUB_ID') {
+    console.warn('[CW] beehiiv not configured yet — simulating success.');
+    console.log('[CW] Would submit:', { email, metadata });
+    await new Promise(r => setTimeout(r, 800));
+    return { ok: true, simulated: true };
+  }
+  try {
+    const formData = new FormData();
+    formData.append('email', email.trim());
+    Object.entries(metadata || {}).forEach(([k, v]) => {
+      if (v) formData.append(k, v);
+    });
+    await fetch(CW_CONFIG.BEEHIIV_FORM_URL, {
+      method: 'POST', body: formData, mode: 'no-cors'
+    });
+    return { ok: true };
+  } catch (err) {
+    console.error('[CW] Subscribe error:', err);
+    return { ok: false, error: 'Something went sideways. Try again.' };
+  }
+}
+
+async function handleSubmit() {
+  const input = document.getElementById('emailInput');
+  const btn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const email = input.value.trim();
+
+  errorMsg.style.display = 'none';
+
+  if (!isValidEmail(email)) {
+    errorMsg.textContent = 'Please enter a valid email address.';
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Casting...';
+
+  const result = await subscribeEmail(email, getUTMs());
+
+  if (result.ok) {
+    document.getElementById('formRow').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  } else {
+    btn.disabled = false;
+    btn.textContent = 'Cast The Spell';
+    errorMsg.textContent = result.error || 'Something went sideways. Try again.';
+    errorMsg.style.display = 'block';
+  }
+}
+
+document.getElementById('emailInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') handleSubmit();
+});
+</script>
+<script type="text/javascript" async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
+</body>
+</html>

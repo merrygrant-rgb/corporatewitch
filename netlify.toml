@@ -1,0 +1,28 @@
+# =========================================================
+# NETLIFY CONFIGURATION — Corporate Witch
+# =========================================================
+
+[build]
+  # Static site — no build command needed
+  publish = "."
+
+# Security headers — applied to all pages
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Don't cache HTML — edits go live immediately
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# PDFs can cache for a week
+[[headers]]
+  for = "/assets/pdf/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
