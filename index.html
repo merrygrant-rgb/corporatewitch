@@ -287,7 +287,32 @@
     color: var(--magenta-bright);
   }
 
- 
+  /* SCROLL HINT */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: fadeInUp 1s ease 1s both;
+    z-index: 2;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--magenta), transparent);
+    animation: scroll-line 2s ease-in-out infinite;
+  }
+
   @keyframes scroll-line {
     0%, 100% { transform: scaleY(0); transform-origin: top; }
     50% { transform: scaleY(1); transform-origin: top; }
@@ -871,9 +896,9 @@
   <p class="hero-copy">
     Your company isn't ready for AI.<br>
     <strong>You should be.</strong><br><br>
-    The spell isn't in the software. It's in how you stack it. I teach professionals to stop collecting tools and start commanding a workflow that hits—every model assigned, every output intentional, every hour reclaimed.<br><br>
-    No degree required. No corporate jargon. Just the real mechanics of working smarter.<br><br>
-    Ready to stop experimenting and start executing?
+    I've worked more jobs than most people have in a lifetime.<br>
+    Not because I couldn't hold one — because I can't stop leveling up.<br>
+    AI is the next level. Let me show you how to climb.
   </p>
 
   <div class="cta-row">
@@ -881,6 +906,7 @@
     <a href="#about" class="cta-ghost">Who Am I?</a>
   </div>
 
+  <div class="scroll-hint">Scroll</div>
 </section>
 
 <!-- QUOTE -->
@@ -890,19 +916,21 @@
     <p class="quote-attr">— Merry, Corporate Witch</p>
   </div>
 </div>
+
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="container">
     <div class="about-grid">
-            <div class="about-text reveal">
+      <div class="about-text reveal">
         <p class="section-label">Who Is The Witch</p>
         <h2 class="section-title">Some people see magic. I see the system behind the spell.</h2>
-        <p>I don't collect titles. I solve the same problem in bigger rooms.</p>
+        <p><span class="highlight">I don't collect titles. I solve the same problem in bigger rooms.</span></p>
         <p>I'm <strong>Merry</strong>. I've been the tech in the OR making sure anesthesia flows, the surgical coordinator juggling a dozen moving pieces, the finance analyst catching the error nobody else saw, the escalation specialist calming down a C-suite meltdown, and the engineer launching ecommerce platforms that actually convert.</p>
-        <p>The common thread? Every role had a system bleeding time. And I couldn't stop myself from fixing it.</p>
-        <p>Then I met AI. Not as a shortcut—as a force multiplier. <span class="highlight">My metrics didn't just improve; they transformed.</span> That's when I realized I wasn't looking at another app to learn. I was looking at a new operating system for work itself.</p>
-        <p>Now I show up on TikTok, pull back the curtain, and help professionals stop wrestling with their workflow and start commanding it. No corporate fluff. No gatekeeping. Just the real mechanics of working smarter.</p>
-        <p>The spell isn't in the software. It's in how you stack it. ChatGPT for the pitch. Claude for the data. Kimi for the build. Gemini for the vision. Mesh them right, and you don't just save time—you build a perfect weapon for business. No degree required. Just strategy. <span class="highlight">Let's build yours.</span></p>
+        <p>The common thread? <span class="highlight">Every role had a system bleeding time.</span> And I couldn't stop myself from fixing it.</p>
+        <p>Then I met AI. Not as a shortcut — as a <span class="highlight">force multiplier</span>. My metrics didn't just improve — they transformed. I outperformed my entire team in a non-tech sales role, as the only person using AI. That's when I stopped treating it like a tool and started treating it like a strategy.</p>
+        <p>Now I show up on TikTok, pull back the curtain, and help professionals stop wrestling with their workflow and start commanding it. No theory. No fluff. Just the real mechanics of working smarter.</p>
+        <p>The spell isn't in the software. It's in how you stack it. <strong>ChatGPT for the draft. Claude for the thinking. Kimi for the build. Gemini for the sweep.</strong> Mesh them right and you don't just save time — you build a perfect weapon for business. No degree required. Just strategy.</p>
+        <p><span class="highlight">Let's build yours.</span> Start with the Ritual — find out where you actually stand.</p>
       </div>
       <div class="career-path reveal">
         <div class="career-item"><span class="arrow">▶</span> Anesthesia &amp; Endoscopy Tech</div>
@@ -1081,7 +1109,7 @@
    when you set up beehiiv. See README.md
    =================================================== */
 window.CW_CONFIG = {
-  BEEHIIV_PUB_ID: 'pub_97a310c2-4b00-429e-bce1-2b7adb90c21a',
+  BEEHIIV_PUB_ID: 'de22271e-fdb5-42df-b6d6-5b31f0921a4e',
   BEEHIIV_FORM_URL: 'https://subscribe-forms.beehiiv.com/de22271e-fdb5-42df-b6d6-5b31f0921a4e'
 };
 
